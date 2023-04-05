@@ -10,14 +10,11 @@ export default async function handler(req, res) {
       const data = await prisma.user.findUnique({
         where: { id: parseInt(userID) },
       });
-      console.log(data);
       if (data.id == userID && data.s_key == key) {
         res.status(200).send(data.username);
       }
-      // res.status(200).send(data.username);
     } catch (error) {
       console.error(error);
-      // res.status(500).json({ error: error.message });
       res.status(500).send("Not authed!");
     }
   }

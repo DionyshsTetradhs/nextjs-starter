@@ -17,3 +17,19 @@ model user {
     password    String    
 
 }
+
+model post {
+    post_id     Int       @id @unique @default(autoincrement())
+    id          Int       @unique
+    username    String    @unique
+    title       String
+    picture     String
+
+}
+
+model comments {
+    comment_id  Int       @id @unique @default(autoincrement())
+    id          Int       @unique
+    username    String    @unique
+
+}

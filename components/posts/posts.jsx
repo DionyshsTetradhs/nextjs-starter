@@ -31,18 +31,18 @@ export default function Framer() {
 
   return (
     <div>
-      <div className="w-4 grid-cols-2">
+      <div className="grid-cols-2 w-4">
         <div className="grid grid-rows-3 grid-flow-col gap-6">
           {fuck.map((item) => (
             <motion.div id={item.id} className="p-2">
               <motion.div
-                className="w-80 h-300  bg-orange-500"
+                className="w-80 bg-orange-500 h-300"
                 drag
                 whileHover={{ scale: 1.1 }}
               >
                 <h1>{item.body} </h1>
                 <img
-                  class="h-auto max-w-full"
+                  class="max-w-full h-auto"
                   src=""
                   alt="image description"
                 ></img>
@@ -54,12 +54,12 @@ export default function Framer() {
       <button onClick={handleComments}>Comments</button>
       <motion.div id="hello" className="p-4">
         <motion.div
-          className="w-80 h-300  bg-orange-500"
+          className="w-80 bg-orange-500 h-300"
           drag
           whileHover={{ scale: 1.1 }}
         >
           <h1>A fully stocked . </h1>
-          <img class="h-auto max-w-full" src="" alt="image description"></img>
+          <img class="max-w-full h-auto" src="" alt="image description"></img>
         </motion.div>
       </motion.div>
     </div>
