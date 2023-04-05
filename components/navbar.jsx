@@ -12,11 +12,11 @@ export default function Navbar() {
   const [username, setUsername] = useState("");
 
   const sendreq = async () => {
-    const { data } = await axios({
+    const data = await axios({
       url: "./api/username",
       method: "GET",
     });
-    setUsername(data);
+    setUsername(data.data);
   };
 
   function logout() {

@@ -18,7 +18,7 @@ export default function MainPage() {
   return (
     <>
       <div>
-        {/* <Navbar></Navbar> */}
+        <Navbar></Navbar>
         {/* <Posts></Posts> */}
       </div>
     </>
