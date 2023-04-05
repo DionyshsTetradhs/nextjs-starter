@@ -4,7 +4,7 @@ import Router from "next/router";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
-import Posts from "./posts";
+import Posts from "./posts/posts";
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -19,7 +19,7 @@ export default function MainPage() {
     <>
       <div>
         <Navbar></Navbar>
-        {/* <Posts></Posts> */}
+        <Posts></Posts>
       </div>
     </>
   );
