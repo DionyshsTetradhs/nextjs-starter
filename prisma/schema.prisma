@@ -9,35 +9,48 @@ datasource db {
     referentialIntegrity = "prisma"
 }
 
-model user {
-    id          Int       @id @unique @default(autoincrement())
+model User {
+    id          String    @id  @default(uuid())
     email       String    @unique
     credit      Int
     username    String    @unique
     password    String    
     s_key       String     
+    createdAt   DateTime
+    Post        Post[]
 
 }
 
-model friendship{
-    id          Int       @id @unique @default(autoincrement())
-    user_id     Int
-    users_id    Int
-
-}
-
-model post {
-    post_id     Int       @id @unique @default(autoincrement())
-    id          Int       @unique
-    username    String    @unique
+model Post {
+    id          String      @id @default(uuid())
+    username    String      @unique
     title       String
+    description String
     picture     String
+    createdAt   DateTime
+    user        User        @relation(fields: [userId], references: [id])
+    userId      String
+    Post_comments    Post_comments[]
+
+    @@index([userId])
 
 }
 
-model comments {
-    comment_id  Int       @id @unique @default(autoincrement())
-    id          Int       @unique
+model Post_comments {
+    id          String    @id @default(uuid())
+    user_id     String    @unique
     username    String    @unique
+    createdAt   DateTime
+    post        Post      @relation(fields: [post_id], references: [id])
+    post_id     String
+
+
+    @@index([post_id])
+}
+
+model Friendship{
+    id          String       @id @default(uuid())
+    user_id     String 
+    users_id    String 
 
 }
