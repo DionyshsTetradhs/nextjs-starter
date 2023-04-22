@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import Posts from "./posts/posts";
+import Post from "./posts/post";
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -20,6 +21,7 @@ export default function MainPage() {
       <div>
         <Navbar></Navbar>
         <Posts></Posts>
+        <Post></Post>
       </div>
     </>
   );

@@ -16,6 +16,7 @@ model User {
     username    String    @unique
     password    String    
     s_key       String     
+    picture     String?
     createdAt   DateTime
     Post        Post[]
 
@@ -26,7 +27,7 @@ model Post {
     username    String      @unique
     title       String
     description String
-    picture     String
+    img         String
     createdAt   DateTime
     user        User        @relation(fields: [userId], references: [id])
     userId      String

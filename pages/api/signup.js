@@ -5,8 +5,15 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const { username, email, input1 } = req.body;
-      await prisma.user.create({
-        data: { username, email, password: input1, s_key: "" },
+      await prisma.User.create({
+        data: {
+          username,
+          email,
+          password: input1,
+          s_key: "",
+          credit: 0,
+          createdAt: new Date().toISOString(),
+        },
       });
       return res.status(200).json("Signup:success");
     } catch (err) {

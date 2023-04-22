@@ -9,14 +9,14 @@ export default async function handler(req, res) {
       const email = req?.body.email;
       const pass = req?.body.pass;
 
-      const user = await prisma.user.findUnique({
+      const user = await prisma.User.findUnique({
         where: {
           email: email,
         },
       });
 
       if (user.password === pass) {
-        await prisma.user.update({
+        await prisma.User.update({
           where: {
             email: email,
           },

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Framer() {
-  const [fuck, setfuck] = useState([]);
+  const [comments, setComments] = useState([]);
 
   // useEffect(() => {
   //   position();
@@ -24,16 +24,16 @@ export default function Framer() {
       url: apiUrl,
       method: "GET",
     });
-    const fuck = data.comments;
-    setfuck(fuck);
-    console.log(fuck);
+    const comments = data.comments;
+    setComments(comments);
+    console.log(comments);
   };
 
   return (
     <div>
       <div className="grid-cols-2 w-4">
         <div className="grid grid-rows-3 grid-flow-col gap-6">
-          {fuck.map((item) => (
+          {comments.map((item) => (
             <motion.div id={item.id} className="p-2">
               <motion.div
                 className="w-80 bg-orange-500 h-300"
@@ -42,7 +42,7 @@ export default function Framer() {
               >
                 <h1>{item.body} </h1>
                 <img
-                  class="max-w-full h-auto"
+                  className="max-w-full h-auto"
                   src=""
                   alt="image description"
                 ></img>
@@ -59,7 +59,11 @@ export default function Framer() {
           whileHover={{ scale: 1.1 }}
         >
           <h1>A fully stocked . </h1>
-          <img class="max-w-full h-auto" src="" alt="image description"></img>
+          <img
+            className="max-w-full h-auto"
+            src=""
+            alt="image description"
+          ></img>
         </motion.div>
       </motion.div>
     </div>

@@ -7,8 +7,8 @@ export default async function handler(req, res) {
       const key = req?.headers.key;
       const userID = req?.headers.userid;
 
-      const data = await prisma.user.findUnique({
-        where: { id: parseInt(userID) },
+      const data = await prisma.User.findUnique({
+        where: { id: userID },
       });
       if (data.id == userID && data.s_key == key) {
         res.status(200).send(data.username);
