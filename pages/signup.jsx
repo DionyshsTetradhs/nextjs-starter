@@ -8,6 +8,7 @@ export default function Signin() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
+  const [test,setTest] = useState(false);
 
   useEffect(() => {
     if (success === true) {
