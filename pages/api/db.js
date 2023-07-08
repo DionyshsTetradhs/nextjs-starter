@@ -2,9 +2,9 @@ import mysql from "mysql2/promise";
 
 export async function query({ query, values }) {
   const dbconnection = await mysql.createConnection({
-    host: "eu-central.connect.psdb.cloud",
-    user: "jwfxpbne76xnt80oyrv0",
-    password: "pscale_pw_lJLYvYiVV5HRifmrb2MHWCqM2p6FfgVPtPANyC9caJB",
+    host: "aws.connect.psdb.cloud",
+    user: "z5wzdl30yh2g6n145pxp",
+    password: "pscale_pw_8Kv3bp7cQP4ZJHqhJVI9wcGp8dIiXuESepYC08TEt11",
     database: "social-network",
   });
   console.log("Dalksdjflkasdjfklasdjfklasdjfkljsfk");
