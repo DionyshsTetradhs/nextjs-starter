@@ -12,7 +12,9 @@ This is a [Next.js](https://nextjs.org/) project that uses [Prisma](https://www.
 pscale auth login
 ```
 ## Get certificate for arch
+
 sudo mkdir -p /etc/pki/tls/certs
+
 sudo ln -s /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
 
 
