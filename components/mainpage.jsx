@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import Posts from "./posts/posts";
 import Post from "./posts/post";
+import DropZone from "./dropzone.jsx"
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -18,11 +19,14 @@ export default function MainPage() {
 
   return (
     <>
-      <div>
-        <Navbar></Navbar>
-        <Posts></Posts>
-        <Post></Post>
-      </div>
+      {
+        //<div>
+          //<Navbar></Navbar>
+          // <Posts></Posts>
+          // <Post></Post>
+        // </div>
+      }
+        <DropZone></DropZone>
     </>
   );
 }

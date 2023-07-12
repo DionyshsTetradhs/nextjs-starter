@@ -1,6 +1,6 @@
 "use-client";
 // import Example from "../example";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView, useTransform, useMotionValue } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ export default function Framer() {
     });
     const comments = data.comments;
     setComments(comments);
-    console.log(comments);
+    // console.log(comments);
   };
 
   return (
