@@ -1,5 +1,5 @@
 "use-client";
-import Example from "../example";
+// import Example from "../example";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
