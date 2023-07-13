@@ -1,3 +1,4 @@
+"use client"
 import {
   AnimatePresence,
   motion,
@@ -15,18 +16,38 @@ export default function Framer() {
   const isColliding = useTransform(x, (x) => x > 100 && x < 200);
   const [comments, setComments] = useState([]);
 
+  function handleOnDrag(e, widgetType){
+    console.log("hi");
+    // e.dataTransfer.setData("widgetType", widgetType);
+  }
+  
+  function handleOnDrop(e){
+    // const widgetType = e.dataTransfer.getData("widgetType");
+    console.log("hello");
+    // console.log("widgetType" widgetType);
+  }
+
+  function handleDragOver(e){
+    e.preventDefault();
+    console.log("fuck");
+  }
+
   return (
     <div>
-      <motion.div
+      <div
         id="dropzone"
+        onDrop={handleOnDrop}
+        onDragOver={handleDragOver}
         style={{
           width: 100,
           height: 100,
           backgroundColor: isColliding ? "blue" : "red",
         }}
       >
-      </motion.div>
+      </div>
       <motion.div
+        draggable
+        onDragStart={(e) => handleOnDrag(e,"Widget A")}
         id="666"
         drag
         style={{
