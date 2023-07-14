@@ -6,5 +6,11 @@ module.exports = {
   theme: {
     extend: {},
   },
+    variants: {
+    extend: {
+      scale: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+      transitionProperty: ['responsive', 'motion-safe', 'motion-reduce', 'hover', 'focus'],
+    },
+  },
   plugins: [],
 }

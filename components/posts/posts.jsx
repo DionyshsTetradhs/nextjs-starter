@@ -1,71 +1,39 @@
 "use-client";
 // import Example from "../example";
-import { motion, AnimatePresence, useInView, useTransform, useMotionValue } from "framer-motion";
+// import { motion, AnimatePresence, useInView, useTransform, useMotionValue } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Framer() {
-  const [comments, setComments] = useState([]);
 
-  // useEffect(() => {
-  //   position();
-  // }),
-  //   [];
+export default function Posts() {
+  const [posts, setPosts] = useState([]);
 
-  // function position() {
-  //   var box = document.getElementById("hell");
-
-  //   box.style.position = "aboslute";
-  // }
-
-  const handleComments = async () => {
-    const apiUrl = "https://dummyjson.com/comments";
-    const { data } = await axios({
-      url: apiUrl,
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios({
+      url: "./api/posts",
       method: "GET",
-    });
-    const comments = data.comments;
-    setComments(comments);
-    // console.log(comments);
-  };
-
+    }); 
+        setPosts(response.data.posts);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    
+    fetchPosts();
+  }, []);
+    
+    
   return (
-    <div>
-      <div className="grid-cols-2 w-4">
-        <div className="grid grid-rows-3 grid-flow-col gap-6">
-          {comments.map((item) => (
-            <motion.div id={item.id} className="p-2">
-              <motion.div
-                className="w-80 bg-orange-500 h-300"
-                drag
-                whileHover={{ scale: 1.1 }}
-              >
-                <h1>{item.body} </h1>
-                <img
-                  className="max-w-full h-auto"
-                  src=""
-                  alt="image description"
-                ></img>
-              </motion.div>
-            </motion.div>
-          ))}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-screen">
+      {posts.map((post) => (
+        <div key={post.id} className="p-6 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+          <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
+          <p>{post.description}</p> 
         </div>
-      </div>
-      <button onClick={handleComments}>Comments</button>
-      <motion.div id="hello" className="p-4">
-        <motion.div
-          className="w-80 bg-orange-500 h-300"
-          drag
-          whileHover={{ scale: 1.1 }}
-        >
-          <h1>A fully stocked . </h1>
-          <img
-            className="max-w-full h-auto"
-            src=""
-            alt="image description"
-          ></img>
-        </motion.div>
-      </motion.div>
+      ))}
     </div>
+      
   );
 }
