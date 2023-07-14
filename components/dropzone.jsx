@@ -1,29 +1,19 @@
 "use client"
-import {
-  AnimatePresence,
-  motion,
-  useDragControls,
-  useInView,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
 import React, { useEffect, useState } from "react";
 
-export default function Framer() {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const isColliding = useTransform(x, (x) => x > 100 && x < 200);
+export default function Test() {
   const [comments, setComments] = useState([]);
+  const [Type, setType] = useState();
 
   function handleOnDrag(e, widgetType){
     console.log("hi");
+    setType(widgetType);
     // e.dataTransfer.setData("widgetType", widgetType);
   }
   
-  function handleOnDrop(e){
+  function handleOnDrop(e,widgetType){
     // const widgetType = e.dataTransfer.getData("widgetType");
-    console.log("hello");
+    console.log(Type);
     // console.log("widgetType" widgetType);
   }
 
@@ -41,24 +31,54 @@ export default function Framer() {
         style={{
           width: 100,
           height: 100,
-          backgroundColor: isColliding ? "blue" : "red",
+          backgroundColor: "blue",
         }}
       >
       </div>
-      <motion.div
+      <div
+        id="second"
+        onDrop={handleOnDrop}
+        onDragOver={handleDragOver}
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "red",
+        }}
+      >
+      </div>
+      <div
         draggable
         onDragStart={(e) => handleOnDrag(e,"Widget A")}
         id="666"
-        drag
         style={{
-          x,
-          y,
           width: 50,
           height: 50,
           backgroundColor: "green",
         }}
       >
-      </motion.div>
+      </div>
+      <div
+        draggable
+        onDragStart={(e) => handleOnDrag(e,"Widget B")}
+        id="666"
+        style={{
+          width: 50,
+          height: 50,
+          backgroundColor: "red",
+        }}
+      >
+      </div>
+      <div
+        draggable
+        onDragStart={(e) => handleOnDrag(e,"Widget C")}
+        id="666"
+        style={{
+          width: 50,
+          height: 50,
+          backgroundColor: "blue",
+        }}
+      >
+      </div>
     </div>
   );
 }

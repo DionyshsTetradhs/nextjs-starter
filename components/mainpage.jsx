@@ -19,14 +19,14 @@ export default function MainPage() {
 
   return (
     <>
+           <Post></Post>
       {
         //<div>
           //<Navbar></Navbar>
           // <Posts></Posts>
-          // <Post></Post>
+        //<DropZone></DropZone>
         // </div>
       }
-        <DropZone></DropZone>
     </>
   );
 }
