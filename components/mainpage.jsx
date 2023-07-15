@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import Posts from "./posts/posts";
 import Post from "./posts/post";
-import DropZone from "./dropzone.jsx";
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -60,7 +59,7 @@ export default function MainPage() {
             key={post.id}
             draggable
             onDragStart={(e) => handleOnDrag(e, post.id)}
-            className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white"
+            className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
             <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
             <p>{post.description}</p>
@@ -72,12 +71,12 @@ export default function MainPage() {
           id="voice"
           onDrop={handleOnDrop}
           onDragOver={handleDragOver}
-          className="absolute bottom-0 left-[-10%] w-64 h-52 bg-blue-600 rounded-full transform  translate-y-1/2 translate-x-1/2 "><h2>Voice</h2></div>
+          className="absolute bottom-0 left-[-10%] w-64 h-52 bg-blue-600 rounded-full transform  translate-y-1/2 translate-x-1/2 "><h2 className="text-center">Voice</h2></div>
         <div 
           id="chat"
           onDrop={handleOnDrop}
           onDragOver={handleDragOver}
-          className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"><h2>Chat</h2></div>
+          className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"><h2 className="text-center" >Chat</h2></div>
       </div>
     </>
   );
