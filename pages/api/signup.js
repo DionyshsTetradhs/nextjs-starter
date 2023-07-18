@@ -4,12 +4,12 @@ import prisma from "./../../lib/prisma.js";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { username, email, input1 } = req.body;
+      const { username, email, pass } = req.body;
       await prisma.User.create({
         data: {
           username,
           email,
-          password: input1,
+          password: pass,
           s_key: "",
           credit: 0,
           createdAt: new Date().toISOString(),

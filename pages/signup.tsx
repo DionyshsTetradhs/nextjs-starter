@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Signin() {
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
+  const [pass, setPass] = useState("");
+  const [passConf, setPassConf] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
-  const [test,setTest] = useState(false);
 
   useEffect(() => {
     if (success === true) {
@@ -22,7 +21,7 @@ export default function Signin() {
       const { data } = await axios({
         url: apiUrl,
         method: "POST",
-        data: { email, pass: input1 },
+        data: { email, pass },
       });
       window.localStorage.setItem("key", data.key);
       window.localStorage.setItem("userID", data.userID);
@@ -34,7 +33,8 @@ export default function Signin() {
   //Post request with axios
   const main_send = async () => {
     const apiUrlEndpoint = "./api/signup";
-    const signup_info = { username, email, input1 };
+    const signup_info = { username, email, pass };
+    console.log("Great success!!");
     try {
       const { data } = await axios({
         url: apiUrlEndpoint,
@@ -54,9 +54,9 @@ export default function Signin() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if ((input1 == input2) & (username !== "") & (email !== "")) {
+    if ((pass === passConf) && (username !== "") && (email !== "")) {
       main_send();
-    } else if ((username == "") & (email == "")) {
+    } else if ((username == "") && (email == "")) {
       alert("Please fill the inputs again!");
     } else {
       console.log("Password is not the same");
@@ -64,10 +64,10 @@ export default function Signin() {
   }
 
   function handleChange1(e) {
-    setInput1(e.target.value);
+    setPass(e.target.value);
   }
   function handleChange2(e) {
-    setInput2(e.target.value);
+    setPassConf(e.target.value);
   }
 
   return (
@@ -105,7 +105,7 @@ export default function Signin() {
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="Password"
                   name="name"
-                  value={input1}
+                  value={pass}
                   placeholder="password"
                 />
               </div>
@@ -115,7 +115,7 @@ export default function Signin() {
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="Password"
                   name="name"
-                  value={input2}
+                  value={passConf}
                   placeholder="Confirm pass"
                 />
               </div>
