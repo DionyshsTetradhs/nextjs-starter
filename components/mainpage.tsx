@@ -7,6 +7,7 @@ import Posts from "./posts/posts";
 import Post from "./posts/post";
 import Chat from "./chat/main";
 import MenuIcon from '@mui/icons-material/Menu';
+import Search from "../components/search"
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -68,7 +69,7 @@ export default function MainPage() {
     <>
       {chatToggle && <><button className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] " onClick={minimize}><MenuIcon/></button> <Chat/></>}
       <Navbar/>
-      <h1 className="text-center">Search</h1>
+      <Search/>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16">
         {posts.map((post) => (
           <div
