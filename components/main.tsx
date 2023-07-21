@@ -7,7 +7,6 @@ export default function Main() {
   const [isAuthed, setIsAuthed] = useState(false);
 
 
-  //FIX ATHENTICATION, RIGHT NOW IT'S NOT REALLY AUTHENTICATING SHIT
   useEffect(() => {
     check_local_storage();
   }, []);
@@ -23,5 +22,9 @@ export default function Main() {
     // }
   };
 
-  return <>{isAuthed ? <MainPage></MainPage> : <SignIn></SignIn>}</>;
+  function handleClick(){
+    setIsAuthed(true);
+  }
+//Fix css for button
+  return <>{isAuthed ? <MainPage></MainPage> : <><SignIn></SignIn><button onClick={handleClick} className="fixed zIndex:10">Check Website without logging in.</button></>}</>;
 }

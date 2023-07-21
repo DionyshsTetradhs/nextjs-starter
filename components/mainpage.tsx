@@ -8,6 +8,7 @@ import Post from "./posts/post";
 import Chat from "./chat/main";
 import MenuIcon from '@mui/icons-material/Menu';
 import Search from "../components/search"
+import ChatText from "../components/chat_text/main"
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -97,6 +98,7 @@ export default function MainPage() {
           className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"><h2 className="text-center" >Chat</h2></div>
         }
       </div>
+      <ChatText/>
     </>
   );
 }

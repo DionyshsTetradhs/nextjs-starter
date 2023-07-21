@@ -7,7 +7,7 @@ export const Input = ({ sendMessage }) => {
   const [message, setMessage] = useState("");
   return (
     <form
-      className="input-container"
+      className="chat-input-container"
       onSubmit={e => {
         sendMessage({
           id: key++,

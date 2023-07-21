@@ -19,7 +19,6 @@ model User {
     picture     String?
     createdAt   DateTime
     Post        Post[]
-
 }
 
 model Post {
@@ -32,9 +31,7 @@ model Post {
     user        User        @relation(fields: [userId], references: [id])
     userId      String
     Post_comments    Post_comments[]
-
     @@index([userId])
-
 }
 
 model Post_comments {
@@ -44,8 +41,6 @@ model Post_comments {
     createdAt   DateTime
     post        Post      @relation(fields: [post_id], references: [id])
     post_id     String
-
-
     @@index([post_id])
 }
 
@@ -53,5 +48,12 @@ model Friendship{
     id          String       @id @default(uuid())
     user_id     String 
     users_id    String 
+    createdAt   DateTime
+}
 
+model Chat{
+    id          String       @id @default(uuid())
+    user_id     String
+    friend_id   String
+    createdAt   DateTime
 }

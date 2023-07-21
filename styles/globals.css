@@ -15,7 +15,7 @@
   box-sizing: border-box;
 }
 
-.input-container {
+.chat-input-container {
   background: rgba(0, 0, 0, 0.3);
   height: 80px;
   display: flex;
