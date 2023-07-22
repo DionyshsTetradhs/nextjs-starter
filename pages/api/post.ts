@@ -1,20 +1,17 @@
 import prisma from "./../../lib/prisma.js";
+import {Auth} from "./../../lib/auth";
 
 export default async function handler(req, res) {
   if (req.method == "POST") {
     try {
-      const key = req?.headers.key;
+      const authed = await Auth([req?.headers.key,req?.headers.userid]);
+      if (authed) {
       const id = req?.headers.userid;
-
       const { title, description, img, createdAt } = req.body;
-
       const user = await prisma.User.findUnique({
         where: { id },
       });
-      console.log(user, "hello ma name is borat");
-
-      if (user.id == id && user.s_key == key) {
-        const data = await prisma.Post.create({
+        await prisma.Post.create({
           data: {
             title,
             description,
@@ -25,10 +22,12 @@ export default async function handler(req, res) {
           },
         });
         res.status(200).send("allgood");
+      }else{
+        res.status(401).send("Not authed!");
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("Not authed!");
+      res.status(500);
     }
   }
 }

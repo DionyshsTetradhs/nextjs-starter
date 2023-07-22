@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   
   if (req.method == "GET") {
     try {
-
       const posts = await prisma.Post.findMany({
         take: 9,
       });

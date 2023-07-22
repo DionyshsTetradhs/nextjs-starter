@@ -26,6 +26,10 @@ export default function Navbar() {
     Router.reload();
   }
 
+  async function openSettings(){
+    console.log("hello settings");
+  }
+
   return (
     <div className="flex">
       <button className="absolute zindex-[-10] top-3 left-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse" onClick={logout}>
@@ -37,7 +41,7 @@ export default function Navbar() {
         src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
         alt={username}
       />
-      <button className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse" onClick={logout}>
+      <button className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse" onClick={openSettings}>
         <LuSettings/>
       </button>
     </div>

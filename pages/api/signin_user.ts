@@ -7,13 +7,12 @@ export default async function handler(req, res) {
     try {
       const email = req?.body.email;
       const pass = req?.body.pass;
-
       const user = await prisma.User.findUnique({
         where: {
           email: email,
         },
       });
-
+      const userID = user.id;
       if (user.password === pass) {
         await prisma.User.update({
           where: {
@@ -24,9 +23,8 @@ export default async function handler(req, res) {
           },
         });
       } else {
-        console.log("Check your password..");
+        res.status(403).send("Check your password..");
       }
-      const userID = user.id;
       res.status(200).send({ key, userID });
     } catch (error) {
       console.error(error);
