@@ -23,7 +23,7 @@ export default function Navbar() {
 
   function logout() {
     localStorage.clear();
-    Router.reload(window.location.pathname);
+    Router.reload();
   }
 
   return (

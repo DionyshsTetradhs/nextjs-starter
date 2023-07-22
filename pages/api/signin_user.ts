@@ -1,4 +1,3 @@
-import { query } from "./db.ts";
 import prisma from "./../../lib/prisma.js";
 
 export default async function handler(req, res) {

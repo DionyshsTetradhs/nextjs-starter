@@ -51,6 +51,14 @@ model Friendship{
     createdAt   DateTime
 }
 
+model Messages{
+    id          String       @id @default(uuid())
+    message     String
+    sender_id   String
+    reciver_id  String
+    createdAt   DateTime
+}
+
 model Chat{
     id          String       @id @default(uuid())
     user_id     String

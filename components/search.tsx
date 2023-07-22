@@ -6,7 +6,7 @@ export default function Search() {
   const [visibility, setVisibility] = useState(true);
   const [input, setInput] = useState("");
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e:any) =>{
     e.preventDefault();
     setInput("");
     setVisibility(!visibility);
@@ -26,7 +26,6 @@ export default function Search() {
     // Code to execute when the input loses focus
     console.log('Input field lost focus');
     setVisibility(!visibility);
-    // Additional code or function calls can be placed here
   };
   
   return(

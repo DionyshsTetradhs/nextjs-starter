@@ -1,5 +1,4 @@
 "use-client";
-import Router from "next/router";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./navbar";
@@ -8,7 +7,7 @@ import Post from "./posts/post";
 import Chat from "./chat/main";
 import MenuIcon from '@mui/icons-material/Menu';
 import Search from "../components/search"
-import ChatText from "../components/chat_text/main"
+import ChatText from "../components/chat_friends/main"
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -36,16 +35,15 @@ export default function MainPage() {
   }, []);
 
   const [posts, setPosts] = useState([]);
-  const [PostID, setPostID] = useState();
+  const [PostID, setPostID] = useState("");
   const [chatToggle, setChatToggle] = useState(false);
   const [voiceToggle, setVoiceToggle] = useState(false);
 
-  function handleOnDrag(e, PostID) {
+  function handleOnDrag(PostID:string) {
     setPostID(PostID);
-    // e.dataTransfer.setData("widgetType", widgetType);
   }
 
-  function handleOnDrop(e, Type) {
+  function handleOnDrop(Type:string) {
     if (Type === "chat"){
       setChatToggle(true);
       
@@ -76,7 +74,7 @@ export default function MainPage() {
           <div
             key={post.id}
             draggable
-            onDragStart={(e) => handleOnDrag(e, post.id)}
+            onDragStart={() => handleOnDrag(post.id)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
             <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
@@ -87,13 +85,13 @@ export default function MainPage() {
       <div className="fixed bottom-0 left-0 right-0">
         <div 
           id="voice"
-          onDrop={(e)=>{handleOnDrop(e, "voice")}}
+          onDrop={()=>{handleOnDrop("voice")}}
           onDragOver={handleDragOver}
           className="absolute bottom-0 left-[-10%] w-64 h-52 bg-blue-600 rounded-full transform  translate-y-1/2 translate-x-1/2 "><h2 className="text-center">Voice</h2></div>
         {!chatToggle &&
         <div 
           id="chat"
-          onDrop={(e)=>{handleOnDrop(e, "chat")}}
+          onDrop={()=>{handleOnDrop("chat")}}
           onDragOver={handleDragOver}
           className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"><h2 className="text-center" >Chat</h2></div>
         }
