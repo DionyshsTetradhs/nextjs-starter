@@ -17,7 +17,9 @@ export default function MainPage() {
       userID: localStorage?.getItem("userID"),
     };
   }
-
+  
+  const id="hello";
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -66,7 +68,7 @@ export default function MainPage() {
 
   return (
     <>
-      {chatToggle && <><button className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] " onClick={minimize}><MenuIcon/></button> <Chat/></>}
+      {chatToggle && <><button className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] " onClick={minimize}><MenuIcon/></button>  <Chat id={id}/></>}
       <Navbar/>
       <Search/>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16">
