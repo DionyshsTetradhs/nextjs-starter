@@ -12,7 +12,8 @@ export default function Post() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await axios({
+    try{
+    await axios({
       url: "./api/post",
       method: "POST",
       data: {
@@ -22,6 +23,9 @@ export default function Post() {
         img: "hello",
       },
     });
+    }catch(error){
+      console.error('Error posting post', error);
+    }
   };
 
   return (

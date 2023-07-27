@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const {message, receiverID } = req.body;
         await prisma.Messages.create({
           data: {
-            message,
+            message:message.content,
             sender_id: id,
             receiver_id: receiverID,
             createdAt:new Date().toISOString(),

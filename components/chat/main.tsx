@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 // import { motion } from "framer-motion";
 import { Input } from "./Input";
 import { MessageList } from "./MessageList";
@@ -19,6 +19,7 @@ const initialMessages: Message[] = [
     author: "them"
   }
 ]
+
 // Define the interface for props
 interface ChildProps {
   id: string;
@@ -28,13 +29,28 @@ const  Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
   const receiverID = props.id;
 
+  const conv = async (receiverID:string)=>{
+    const conversation = await axios({
+      data: {receiverID},
+      url: "./api/messeges/getConversation",
+      method: "GET",
+    });
+    return conversation;
+  } 
+  console.log("Yo yo yo !!",conv);
+  
   const sendMessage = async (message: Message) =>{
     setMessages([...messages, message]);
+    try{
     await axios({
       data: {message , receiverID},
       url: "./api/messeges/send",
       method: "POST",
     });
+    }catch(error){
+      console.error('Error sending message', error);
+      return[];
+    }
     
    } 
 

@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             username: user.username,
           },
         });
-        res.status(200).send("allgood");
+        res.status(200);
       }else{
         res.status(401).send("Not authed!");
       }
