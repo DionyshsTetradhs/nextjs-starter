@@ -55,7 +55,7 @@ model Messages{
     id          String       @id @default(uuid())
     message     String
     sender_id   String
-    reciver_id  String
+    receiver_id String
     createdAt   DateTime
 }
 

@@ -5,12 +5,11 @@ interface Props {
   id: Message["id"];
   content: Message["content"];
   author: Message["author"];
-  removeMessage: (key: number) => void;
 }
 
-export const MessageBubble = ({ id, content, removeMessage }: Props) => {
+export const MessageBubble = ({ id, content }: Props) => {
   return (
-    <div className="message-bubble" onClick={() => removeMessage(id)}>
+    <div className="message-bubble" >
       {content}
     </div>
   );

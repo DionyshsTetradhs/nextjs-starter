@@ -7,13 +7,13 @@ export default async function handler(req, res) {
       const authed = await Auth([req?.headers.key,req?.headers.userid]);
       if (authed) {
         const id = req?.headers.userid;
-        const {message, userId, reciverId, createdAt } = req.body;
+        const {message, receiverID } = req.body;
         await prisma.Messages.create({
           data: {
             message,
-            userId: id,
-            reciverId,
-            createdAt,
+            sender_id: id,
+            receiver_id: receiverID,
+            createdAt:new Date().toISOString(),
           },
         });
         res.status(200);

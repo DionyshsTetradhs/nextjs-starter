@@ -5,10 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   messages: Message[];
-  removeMessage: (key: number) => void;
 }
 
-export const MessageList = ({ messages, removeMessage }: Props) => {
+export const MessageList = ({ messages}: Props) => {
   return (
     <div className="messages-container">
       <AnimatePresence initial={false}>
@@ -24,7 +23,6 @@ export const MessageList = ({ messages, removeMessage }: Props) => {
             <MessageBubble
               key={message.id}
               {...message}
-              removeMessage={removeMessage}
             />
           </motion.div>
         ))}

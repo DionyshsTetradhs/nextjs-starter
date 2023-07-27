@@ -26,18 +26,12 @@ interface ChildProps {
     
 const  Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
-  const [test, setTest] = useState(props.id);
-
-  const removeMessage = (key: number) => {
-    const newMessages = [...messages];
-    newMessages.splice(newMessages.findIndex(({ id }) => id === key), 1);
-    setMessages(newMessages);
-  };
+  const receiverID = props.id;
 
   const sendMessage = async (message: Message) =>{
     setMessages([...messages, message]);
-    const data = await axios({
-      // data: {message, prop.id, reciverId, createdAt};
+    await axios({
+      data: {message , receiverID},
       url: "./api/messeges/send",
       method: "POST",
     });
@@ -46,9 +40,8 @@ const  Chat: React.FC<ChildProps> = (props) => {
 
   return (
     <div className="absolute bottom-0 right-0 z-[10]">
-    <h1>{test}</h1>
-      <MessageList messages={messages} removeMessage={removeMessage} />
-      <Input sendMessage={sendMessage} />
+      <MessageList messages={messages}/>
+      <Input sendMessage={sendMessage}/>
     </div>
   );
 };
