@@ -1,15 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import axios, { Axios } from "axios";
-// import { motion } from "framer-motion";
 import { Input } from "./Input";
 import { MessageList } from "./MessageList";
 import { Message } from "./types";
-// import "./styles.css";
 
 const initialMessages: Message[] = [
   {
-    id: 0,
+    id:0, 
     content: "Hey whats up",
     author: "us"
   },
@@ -29,27 +27,28 @@ const  Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
   const receiverID = props.id;
 
-  const conv = async (receiverID:string)=>{
+  async function conv(){
     const conversation = await axios({
       data: {receiverID},
       url: "./api/messeges/getConversation",
-      method: "GET",
+      method: "POST",
     });
-    return conversation;
+    // const clean_messages = Cleanup(conversation.data);
+    console.log(conversation.data);
+    setMessages(conversation.data);
   } 
-  console.log("Yo yo yo !!",conv);
   
   const sendMessage = async (message: Message) =>{
-    setMessages([...messages, message]);
+    // setMessages([...messages, message]);
     try{
-    await axios({
+    const data = await axios({
       data: {message , receiverID},
       url: "./api/messeges/send",
       method: "POST",
     });
+      await conv();
     }catch(error){
       console.error('Error sending message', error);
-      return[];
     }
     
    } 

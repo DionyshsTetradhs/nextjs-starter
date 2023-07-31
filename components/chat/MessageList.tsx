@@ -14,7 +14,6 @@ export const MessageList = ({ messages}: Props) => {
         {messages.map(message => (
           <motion.div
             key={message.id}
-            positionTransition
             className={`message-bubble-container ${message.author}`}
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
