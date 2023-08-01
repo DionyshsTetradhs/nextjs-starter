@@ -1,9 +1,6 @@
-export function Cleanup(req: any[], id:string) {
-  interface Message {
-    id: number;
-    content: string;
-    author: "us" | "them";
-  }
+import { Message, Messag } from "../components/chat/types";
+
+export function Cleanup(req: Messag[], id:string) {
 
   let clean_messages: Message[] = [];
   let j = 0;

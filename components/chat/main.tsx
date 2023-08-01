@@ -33,8 +33,6 @@ const  Chat: React.FC<ChildProps> = (props) => {
       url: "./api/messeges/getConversation",
       method: "POST",
     });
-    // const clean_messages = Cleanup(conversation.data);
-    console.log(conversation.data);
     setMessages(conversation.data);
   } 
   
