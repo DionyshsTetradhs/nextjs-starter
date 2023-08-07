@@ -1,6 +1,7 @@
 import prisma from "./../../lib/prisma.js";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   var rand = require("generate-key");
   const key = rand.generateKey(10);
   if (req.method == "POST") {

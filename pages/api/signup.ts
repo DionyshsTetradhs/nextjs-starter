@@ -1,6 +1,7 @@
 import prisma from "./../../lib/prisma.js";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     try {
       const { username, email, pass } = req.body;

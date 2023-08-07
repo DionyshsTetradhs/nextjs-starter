@@ -37,9 +37,11 @@ export default function MainPage() {
   }, []);
 
   const [posts, setPosts] = useState([]);
-  const [PostID, setPostID] = useState("");
+  const [receiverID, setPostID] = useState("");
+  const [postToggle, setPostToggle] = useState(false);
+  const [replyToggle, setReplyToggle] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
-  const [voiceToggle, setVoiceToggle] = useState(false);
+  const [messagesToggle, setMessagesToggle] = useState(false);
 
   function handleOnDrag(PostID: string) {
     setPostID(PostID);
@@ -48,18 +50,29 @@ export default function MainPage() {
   function handleOnDrop(Type: string) {
     if (Type === "chat") {
       setChatToggle(true);
-    } else if (Type === "voice") {
-      setVoiceToggle(true);
+    } else if (Type === "post") {
+      setPostToggle(true);
     }
-
-    // console.log("widgetType" widgetType);
   }
 
-  function minimize() {
+  async function handleClickChat() {
+    setMessagesToggle(true);
+  }
+
+  function handleClickPost() {
+    setPostToggle(true);
+  }
+  
+  function minimizeChat() {
     setChatToggle(false);
+    setMessagesToggle(false);
+  }
+  
+  function minimizePost() {
+    setPostToggle(false);
   }
 
-  function handleDragOver(e) {
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
@@ -69,11 +82,11 @@ export default function MainPage() {
         <>
           <button
             className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
-            onClick={minimize}
+            onClick={minimizeChat}
           >
             <MenuIcon />
           </button>{" "}
-          <Chat id={PostID} />
+          <Chat id={receiverID} />
         </>
       )}
       <Navbar />
@@ -83,7 +96,7 @@ export default function MainPage() {
           <div
             key={post.id}
             draggable
-            onDragStart={() => handleOnDrag(post.id)}
+            onDragStart={() => handleOnDrag(post.userId)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
             <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
@@ -91,19 +104,50 @@ export default function MainPage() {
           </div>
         ))}
       </div>
+      
+     {postToggle?(
+<>
+              <button
+                className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
+                onClick={minimizePost}
+              >
+                <MenuIcon />
+              </button>{" "}
+        <Post></Post>
+</>
+      ) :
+
       <div className="fixed bottom-0 left-0 right-0">
         <div
-          id="voice"
+          id="post"
           onDrop={() => {
-            handleOnDrop("voice");
+            handleOnDrop("post");
           }}
           onDragOver={handleDragOver}
           className="absolute bottom-0 left-[-10%] w-64 h-52 bg-blue-600 rounded-full transform  translate-y-1/2 translate-x-1/2 "
         >
-          <h2 className="text-center">Voice</h2>
+          <h2 className="text-center">Post</h2>
+          <button onClick={handleClickPost}>Post!klajsdPost</button>
         </div>
-        {!chatToggle &&
-          (
+        </div>
+      } 
+      <div className="fixed bottom-0 left-0 right-0">
+        
+        {messagesToggle
+          ? (
+            <>
+              <ChatText />
+              <button
+                className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
+                onClick={minimizeChat}
+              >
+                <MenuIcon />
+              </button>{" "}
+            </>
+          )
+          : <></>}
+        {!chatToggle && !messagesToggle
+          ? (
             <div
               id="chat"
               onDrop={() => {
@@ -113,10 +157,11 @@ export default function MainPage() {
               className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"
             >
               <h2 className="text-center">Chat</h2>
+              <button onClick={handleClickChat}>Chat</button>
             </div>
-          )}
+          )
+          : <></>}
       </div>
-      <ChatText />
     </>
   );
 }

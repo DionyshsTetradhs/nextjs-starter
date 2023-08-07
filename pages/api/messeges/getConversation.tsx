@@ -1,12 +1,13 @@
 import prisma from "./../../../lib/prisma.js";
 import { Auth } from "./../../../lib/auth";
-import { Cleanup } from "../../../lib/messages_cleanup";
+import { Cleanup } from "../../../lib/utils";
 import { Message, Messag } from "../../../components/chat/types";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req:any, res:any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     try {
-      const authed = await Auth([req?.headers.key, req?.headers.userid]);
+      const authed = await Auth([req.headers.key, req.headers.userid]);
       if (authed) {
         const id = req?.headers.userid;
         const { receiverID } = req.body;

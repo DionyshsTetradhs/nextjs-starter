@@ -1,7 +1,8 @@
 import prisma from "./../../lib/prisma.js";
 import {Auth} from "./../../lib/auth";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     try {
       const authed = await Auth([req?.headers.key,req?.headers.userid]);

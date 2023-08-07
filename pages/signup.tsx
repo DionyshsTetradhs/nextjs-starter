@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Signin() {
@@ -34,7 +34,6 @@ export default function Signin() {
   const main_send = async () => {
     const apiUrlEndpoint = "./api/signup";
     const signup_info = { username, email, pass };
-    console.log("Great success!!");
     try {
       const { data } = await axios({
         url: apiUrlEndpoint,
@@ -52,7 +51,7 @@ export default function Signin() {
     }
   };
 
-  function handleSubmit(event) {
+  function handleSubmit(event:FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if ((pass === passConf) && (username !== "") && (email !== "")) {
       main_send();
@@ -63,10 +62,10 @@ export default function Signin() {
     }
   }
 
-  function handleChange1(e) {
+  function handleChange1(e:ChangeEvent<HTMLInputElement>) {
     setPass(e.target.value);
   }
-  function handleChange2(e) {
+  function handleChange2(e:ChangeEvent<HTMLInputElement>) {
     setPassConf(e.target.value);
   }
 
