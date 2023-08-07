@@ -33,12 +33,12 @@ export default async function handler(
           });
 
           data = await removeDuplicates(data);
-          console.log(data);
 
           // Create an array of promises for each getUsernameWithID call
           const promiseArray = data.map(async (item) => {
             let username_data = await getUsernameWithID(item.receiver_id);
-            return { ...item, username_data };
+            const id = item.id;
+            return { id, username_data };
           });
 
           // Wait for all promises to resolve using Promise.all
