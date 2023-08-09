@@ -20,8 +20,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             createdAt: "desc",
           },
         });
+        let username = await prisma.User.findUnique({
+          where:{
+            id:receiverID
+          }
+        })
+        username = username.username;
         const clean_data:Message[] = Cleanup(data, id);
-        res.status(200).send(clean_data);
+        res.status(200).send({clean_data, username});
       } else {
         res.status(401).send("Not authed!");
       }

@@ -23,30 +23,38 @@ export default function Post() {
         img: "hello",
       },
     });
+      setTitle("");
+      setDescription("");
     }catch(error){
       console.error('Error posting post', error);
     }
   };
 
   return (
-    <div className="bottom">
-      <form onSubmit={handleSubmit}>
+    <div className="bottom absolute bottom-0 left-0 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-10">
+      <form onSubmit={handleSubmit} className="absolute bottom-0 left-0 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-10">
         <input
           onChange={({ target }) => setTitle(target.value)}
+          autoFocus
           type="text"
           name="title"
           value={title}
-          placeholder="title"
+          placeholder="Title"
+          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-lg px-20 mt-2"
         />
         <input
           onChange={({ target }) => setDescription(target.value)}
           type="text"
           name="descr"
           value={description}
-          placeholder="description"
+          placeholder="Description"
+          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-lg px-20 mt-2"
         />
         {/* <input>picture</input> */}
-        <button type="submit">Send</button>
+        <button type="submit"
+
+          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-lg px-20 mt-2"
+        >Send</button>
       </form>
     </div>
   );

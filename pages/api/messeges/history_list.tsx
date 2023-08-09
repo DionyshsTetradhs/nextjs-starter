@@ -37,7 +37,7 @@ export default async function handler(
           // Create an array of promises for each getUsernameWithID call
           const promiseArray = data.map(async (item) => {
             let username_data = await getUsernameWithID(item.receiver_id);
-            const id = item.id;
+            const id = item.receiver_id;
             return { id, username_data };
           });
 

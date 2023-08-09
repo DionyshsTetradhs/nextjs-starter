@@ -51,7 +51,7 @@ export default function MainPage() {
     if (Type === "chat") {
       setChatToggle(true);
     } else if (Type === "post") {
-      setPostToggle(true);
+      setReplyToggle(true);
     }
   }
 
@@ -62,18 +62,25 @@ export default function MainPage() {
   function handleClickPost() {
     setPostToggle(true);
   }
-  
+
   function minimizeChat() {
     setChatToggle(false);
     setMessagesToggle(false);
   }
-  
+
   function minimizePost() {
     setPostToggle(false);
+    setReplyToggle(false);
   }
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
+  }
+
+  function handleChildEvent(buttonId: string) {
+    setPostID(buttonId);
+    setMessagesToggle(false);
+    setChatToggle(true);
   }
 
   return (
@@ -85,7 +92,7 @@ export default function MainPage() {
             onClick={minimizeChat}
           >
             <MenuIcon />
-          </button>{" "}
+          </button>
           <Chat id={receiverID} />
         </>
       )}
@@ -104,60 +111,88 @@ export default function MainPage() {
           </div>
         ))}
       </div>
-      
-     {postToggle?(
-<>
-              <button
-                className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
-                onClick={minimizePost}
-              >
-                <MenuIcon />
-              </button>{" "}
-        <Post></Post>
-</>
-      ) :
 
+      {postToggle
+        ? (
+          <>
+            <button
+              className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
+              onClick={minimizePost}
+            >
+              <MenuIcon />
+            </button>{" "}
+            <Post></Post>
+          </>
+        )
+        : replyToggle
+        ? (
+          <>
+            <h1>ReplyToggle</h1>
+            <button
+              className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
+              onClick={minimizePost}
+            >
+              <MenuIcon />
+            </button>
+          </>
+        )
+        : (
+          <div className="fixed bottom-0 left-0 right-0">
+            <div
+              id="post"
+              onDrop={() => {
+                handleOnDrop("post");
+              }}
+              onDragOver={handleDragOver}
+              className="absolute scale-150 bottom-0 left-[-10%] w-64 px-10 h-64 bg-blue-400 rounded-full transform  translate-y-1/2 translate-x-8 "
+            >
+              <h2 className="text-center absolute overflow-hidden shadow-md text-white scale-100 bottom-0 left-[-10%] w-64 px-10 h-64 rounded-full transform  translate-y-14 translate-x-16">
+                Post
+              </h2>
+              <button
+                onClick={handleClickPost}
+                className="absolute scale-100 bottom-0 left-[-10%] w-64 px-10 h-64 rounded-full transform  translate-y-2/6 translate-x-8 "
+              >
+              </button>
+            </div>
+          </div>
+        )}
       <div className="fixed bottom-0 left-0 right-0">
-        <div
-          id="post"
-          onDrop={() => {
-            handleOnDrop("post");
-          }}
-          onDragOver={handleDragOver}
-          className="absolute bottom-0 left-[-10%] w-64 h-52 bg-blue-600 rounded-full transform  translate-y-1/2 translate-x-1/2 "
-        >
-          <h2 className="text-center">Post</h2>
-          <button onClick={handleClickPost}>Post!klajsdPost</button>
-        </div>
-        </div>
-      } 
-      <div className="fixed bottom-0 left-0 right-0">
-        
         {messagesToggle
           ? (
             <>
-              <ChatText />
+              <ChatText onChildEvent={handleChildEvent} />
               <button
                 className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
                 onClick={minimizeChat}
               >
                 <MenuIcon />
-              </button>{" "}
+              </button>
+              {" "}
             </>
           )
           : <></>}
+
         {!chatToggle && !messagesToggle
           ? (
-            <div
-              id="chat"
-              onDrop={() => {
-                handleOnDrop("chat");
-              }}
-              onDragOver={handleDragOver}
-              className="absolute bottom-0 right-[-10%] w-64 h-52 bg-blue-500 rounded-full transform translate-y-1/2 -translate-x-1/2"
-            >
-              <h2 className="text-center">Chat</h2>
-              <button onClick={handleClickChat}>Chat</button>
+            <div className="fixed bottom-0 left-0 right-0">
+              <div
+                id="chat"
+                onDrop={() => {
+                  handleOnDrop("chat");
+                }}
+                onDragOver={handleDragOver}
+                className="absolute bottom-0 right-[-10%] px-10 w-64 h-64 bg-blue-400 rounded-full transform translate-y-1/2 -translate-x-8 scale-150"
+              >
+                <h2 className="text-center overflow-hidden shadow-md text-white  absolute scale-100 bottom-0 w-64 h-64 right-[40%] rounded-full transform translate-y-14 translate-x-16">
+                  Chat
+                </h2>
+                <button
+                  onClick={handleClickChat}
+                  className="absolute scale-120 bottom-0 right-[-1%] w-64 h-64 rounded-full transform  translate-y-2/6 translate-x-4/10 "
+                >
+                </button>
+              </div>
             </div>
           )
           : <></>}

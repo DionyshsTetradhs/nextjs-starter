@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             username: user.username,
           },
         });
-        res.status(200);
+        res.status(200).send(200);
       }else{
         res.status(401).send("Not authed!");
       }

@@ -25,6 +25,7 @@ interface ChildProps {
 
 const Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
+  const [username, setUsername] = useState("");
   const receiverID = props.id;
 
   useEffect(() => {
@@ -35,7 +36,8 @@ const Chat: React.FC<ChildProps> = (props) => {
           url: "./api/messeges/getConversation",
           method: "POST",
         });
-        setMessages(conversation.data);
+        setMessages(conversation.data.clean_data);
+        setUsername(conversation.data.username);
       } catch (error) {
       }
     };
@@ -48,13 +50,14 @@ const Chat: React.FC<ChildProps> = (props) => {
       url: "./api/messeges/getConversation",
       method: "POST",
     });
-    setMessages(conversation.data);
+    setMessages(conversation.data.clean_data);
+    setUsername(conversation.data.username);
   };
 
   const sendMessage = async (message: Message) => {
     // setMessages([...messages, message]);
     try {
-      const data = await axios({
+      await axios({
         data: { message, receiverID },
         url: "./api/messeges/send",
         method: "POST",
@@ -67,6 +70,9 @@ const Chat: React.FC<ChildProps> = (props) => {
 
   return (
     <div className="absolute bottom-0 right-0 z-[10]">
+      <div className="bg-blue-500 bg-opacity-50 text-white text-center py-4 rounded-lg">
+        <h1 className="text-4xl font-bold">{username}</h1>
+      </div>
       <MessageList messages={messages} />
       <Input sendMessage={sendMessage} />
     </div>
