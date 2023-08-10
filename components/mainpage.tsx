@@ -8,6 +8,7 @@ import Chat from "./chat/main";
 import MenuIcon from "@mui/icons-material/Menu";
 import Search from "../components/search";
 import ChatText from "../components/chat_friends/main";
+import Reply_toggle from "../components/reply_toggle"; 
 
 export default function MainPage() {
   //Pass (key, userID) through headers for authentication
@@ -42,9 +43,11 @@ export default function MainPage() {
   const [replyToggle, setReplyToggle] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
   const [messagesToggle, setMessagesToggle] = useState(false);
+  const [postId, setPostId] = useState("");
 
-  function handleOnDrag(PostID: string) {
+  function handleOnDrag(PostID: string, postID:string) {
     setPostID(PostID);
+    setPostId(postID);
   }
 
   function handleOnDrop(Type: string) {
@@ -103,7 +106,7 @@ export default function MainPage() {
           <div
             key={post.id}
             draggable
-            onDragStart={() => handleOnDrag(post.userId)}
+            onDragStart={() => handleOnDrag(post.userId, post.id)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
             <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
@@ -127,7 +130,7 @@ export default function MainPage() {
         : replyToggle
         ? (
           <>
-            <h1>ReplyToggle</h1>
+            <Reply_toggle id={postId}></Reply_toggle>
             <button
               className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
               onClick={minimizePost}
