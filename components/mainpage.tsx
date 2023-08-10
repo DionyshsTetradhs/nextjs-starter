@@ -44,8 +44,10 @@ export default function MainPage() {
   const [chatToggle, setChatToggle] = useState(false);
   const [messagesToggle, setMessagesToggle] = useState(false);
   const [postId, setPostId] = useState("");
+  const [username_p, setUsername_p] = useState("");
 
-  function handleOnDrag(PostID: string, postID:string) {
+  function handleOnDrag(PostID: string, postID:string, username:string) {
+    setUsername_p(username);
     setPostID(PostID);
     setPostId(postID);
   }
@@ -106,9 +108,10 @@ export default function MainPage() {
           <div
             key={post.id}
             draggable
-            onDragStart={() => handleOnDrag(post.userId, post.id)}
+            onDragStart={() => handleOnDrag(post.userId, post.id, post.username)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
+            <h1>{post.username}</h1>
             <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
             <p>{post.description}</p>
           </div>
@@ -130,7 +133,7 @@ export default function MainPage() {
         : replyToggle
         ? (
           <>
-            <Reply_toggle id={postId}></Reply_toggle>
+            <Reply_toggle postId={postId} username={username_p} ></Reply_toggle>
             <button
               className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
               onClick={minimizePost}

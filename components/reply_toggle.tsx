@@ -5,15 +5,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
   interface ChildProps {
-    id: string;
+    username: string,
+    postId: string,
   }
 
 const Reply_toggle: React.FC<ChildProps> = (props) => {
 
-  const postId = props.id;
+  const postId = props.postId;
+  const username = props.username;
   const [reply, setReply] = useState("");
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try{
     await axios({
