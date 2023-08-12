@@ -78,6 +78,10 @@ export default function MainPage() {
     setReplyToggle(false);
   }
 
+  function handlePostClick(){
+    
+  }
+
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
   }
@@ -107,6 +111,7 @@ export default function MainPage() {
         {posts.map((post) => (
           <div
             key={post.id}
+            onClick={handlePostClick}
             draggable
             onDragStart={() => handleOnDrag(post.userId, post.id, post.username)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
