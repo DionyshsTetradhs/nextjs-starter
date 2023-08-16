@@ -25,7 +25,7 @@ export default function Signin() {
     setSuccess(true);
   };
 
-  function handleSubmit(event) {
+  function handleSubmit(event:any) {
     event.preventDefault();
     main_send();
   }

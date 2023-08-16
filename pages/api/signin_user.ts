@@ -2,19 +2,22 @@ import prisma from "./../../lib/prisma.js";
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  var passwordHash = require('password-hash');
+  
   var rand = require("generate-key");
   const key = rand.generateKey(10);
   if (req.method == "POST") {
     try {
       const email = req?.body.email;
       const pass = req?.body.pass;
+      console.log("This is Pass!!!!!!!!",pass);
       const user = await prisma.User.findUnique({
         where: {
           email: email,
         },
       });
       const userID = user.id;
-      if (user.password === pass) {
+      if ( passwordHash.verify(pass, user.password)) {
         await prisma.User.update({
           where: {
             email: email,
