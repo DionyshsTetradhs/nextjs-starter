@@ -1,6 +1,6 @@
 "use-client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Router from "next/router";
 import { BiLogOut } from "react-icons/bi";
@@ -13,7 +13,7 @@ export default function Navbar() {
   }, []);
 
   const [username, setUsername] = useState("");
-  const [settings, setSettings] = useState(false);
+  let [settings, setSettings] = useState(false);
   const myDivRef = useRef(null);
 
   const sendreq = async () => {
@@ -28,8 +28,8 @@ export default function Navbar() {
     localStorage.clear();
     Router.reload();
   }
-  
-useEffect(() => {
+
+  useEffect(() => {
     const divElement = myDivRef.current;
 
     const handleDocumentClick = (event) => {
@@ -38,19 +38,20 @@ useEffect(() => {
       }
     };
 
-    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener("click", handleDocumentClick);
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener("click", handleDocumentClick);
     };
   }, []);
-  
-  function openSettings() {
-    setSettings(true);
-  }
 
-  function closeSettings() {
-    setSettings(false);
+  function handleSettings() {
+    console.log("settings");
+    if (settings === false) {
+      setSettings(true);
+    } else {
+      setSettings(false);
+    }
   }
 
   return (
@@ -61,22 +62,25 @@ useEffect(() => {
       >
         <BiLogOut />
       </button>
-      <h1 className="p-4 pl-40 m-2">{username}</h1>
-      <img
-        className="inline-block h-16 w-16 m-2 rounded-full ring-2 ring-white"
-        src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        alt={username}
-      />
+      <div className="absolute left-24 bg-blue-500 bg-opacity-50 text-white text-center top-3 rounded-lg">
+        <h1 className="text-4xl font-bold p-1">{username}</h1>
+      </div>
       {settings
-        ? 
-        <>
-          <Settings></Settings>
-          <div onBlur={closeSettings} ref={myDivRef}></div>
-       </> 
+        ? (
+          <>
+            <Settings></Settings>
+            <button
+              className="absolute z-50 top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse"
+              onClick={handleSettings}
+            >
+              <LuSettings />
+            </button>
+          </>
+        )
         : (
           <button
             className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse"
-            onClick={openSettings}
+            onClick={handleSettings}
           >
             <LuSettings />
           </button>

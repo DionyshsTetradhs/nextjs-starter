@@ -107,7 +107,7 @@ export default function MainPage() {
       )}
       <Navbar />
       <Search />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
         {posts.map((post) => (
           <div
             key={post.id}

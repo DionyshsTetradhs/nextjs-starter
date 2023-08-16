@@ -14,6 +14,7 @@ const Reply_toggle: React.FC<ChildProps> = (props) => {
   const postId = props.postId;
   const username = props.username;
   const [reply, setReply] = useState("");
+  const [username_h1, setUsername] = useState(props.username);
   
   const handleSubmit = async (e:any) => {
     e.preventDefault();
@@ -36,7 +37,10 @@ const Reply_toggle: React.FC<ChildProps> = (props) => {
 
   return (
     <div className="bottom absolute bottom-0 left-0 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-10">
-      <form onSubmit={handleSubmit} className="absolute bottom-0 left-0 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-10">
+      <form onSubmit={handleSubmit} className="absolute bottom-0 left-0 z-10 flex flex-col items-center bg-blue-400 rounded-lg px-10 p-5">
+      <div className="bg-blue-500 bg-opacity-50 text-white text-center py-4 rounded-lg">
+        <h1 className="text-4xl font-bold px-40">{username_h1}</h1>
+      </div>
         <input
           onChange={({ target }) => setReply(target.value)}
           autoFocus
