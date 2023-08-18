@@ -1,8 +1,8 @@
 "use client";
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import axios from "axios";
-import StrengthMeter from "../lib/passwordChecker"; "./../lib/passwordChecker";
 import * as EmailValidator from 'email-validator';
+import { passwordStrength } from 'check-password-strength'
 
 export default function Signin() {
   var passwordHash = require('password-hash');
@@ -14,13 +14,7 @@ export default function Signin() {
   const [success, setSuccess] = useState(false);
   const [emailValidation, setEmailValidation] = useState(true);
   const [usernameValidation, setUsernameValidation] = useState(true);
-  const [isStrong, initRobustPassword] = useState(null);
-  
-  const [pwdInput, initValue] = useState({
-    password: "",
-  });
-  const [isError, setError] = useState(null);
-  
+  const [passStrength, setPassStrength] = useState("");
   
   const handleChangeEmail = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -54,43 +48,10 @@ export default function Signin() {
   }
   
   const handleChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
-    
     setPass(e.target.value);
-    let password = e.target.value;
-    initValue({
-      ...pwdInput,
-      password: e.target.value,
-    });
-    setError(null);
-    let caps, small, num, specialSymbol;
-    if (password.length < 4) {
-      setError(
-        "missing(lowercase, number, special)"
-      );
-      return;
-    } else {
-      caps = (password.match(/[A-Z]/g) || []).length;
-      small = (password.match(/[a-z]/g) || []).length;
-      num = (password.match(/[0-9]/g) || []).length;
-      specialSymbol = (password.match(/\W/g) || []).length;
-      if (caps < 1) {
-        setError("Must add one UPPERCASE letter");
-        return;
-      } else if (small < 1) {
-        setError("Must add one lowercase letter");
-        return;
-      } else if (num < 1) {
-        setError("Must add one number");
-        return;
-      } else if (specialSymbol < 1) {
-        setError("Add special symbol: @$! % * ? &");
-        return;
-      }
-    }
+    setPassStrength(passwordStrength(e.target.value).value);
   };
-  const initPwdInput = async (childData) => {
-    initRobustPassword(childData);
-  };
+  
 
   useEffect(() => {
     if (success === true) {
@@ -180,8 +141,7 @@ export default function Signin() {
                 />
               </div>
               {emailValidation?<p className="errors text-green-800">valid </p>:<p className="errors text-red-800">not valid</p>}
-              <div className="text-lg">
-                 {isError !== null && <p className="text-center">{isError}</p>}
+              <div className="mb-1 text-lg">
                 <input
                   onChange={handleChangePassword}
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
@@ -192,8 +152,6 @@ export default function Signin() {
                 />
               </div>
               
-                <StrengthMeter password={pwdInput.password} actions={initPwdInput} />
-        {isStrong === "strong" }
               <div className="mb-4 text-lg">
                 <input
                   onChange={handleChange}
@@ -204,6 +162,7 @@ export default function Signin() {
                   placeholder="Confirm pass"
                 />
               </div>
+              <p>{passStrength}</p>
               <div className="mt-8 flex justify-center text-lg text-black">
                 <button
                   type="submit"
