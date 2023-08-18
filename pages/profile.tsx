@@ -22,6 +22,7 @@ export default function Profile() {
   const [pwdInput, initValue] = useState({
     password: "",
   });
+  console.log("hasdjf");
   
   const handleChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
