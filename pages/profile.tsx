@@ -63,7 +63,7 @@ export default function Profile() {
         <div className="rounded-xl bg-gray-800 bg-opacity-50 px-20 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
-              <span className="text-gray-300">Change you profile information</span>
+              <span className="text-gray-300">Change your profile information</span>
             </div>
             <form  className="flex flex-col items-center justify-center">
               <div className="text-lg">
