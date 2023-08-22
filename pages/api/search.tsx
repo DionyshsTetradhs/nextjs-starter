@@ -5,30 +5,28 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  var posts = [];
-    try{
-    const search = req.body.data;
-      console.log(search,"search-top");
-      
-    if (search == ""){
-      console.log("A");
+  try {
+    var posts = [];
+    const search = req.body.searchQuery;
+    if (search == "") {
       posts = await prisma.Post.findMany({
-          take: 9,
-        })
-    }else{
-      console.log("B");
-      console.log(search,"search");
-
-        posts = await prisma.Post.findMany({
-          where: {
-            description: search,
-          }
-      
-      })
+        take: 9,
+      });
+    } else {
+      posts = await prisma.Post.findMany({
+take: 9,
+  orderBy: {
+    _relevance: {
+      fields: ['description','title'],
+      search: search,
+      sort: 'desc',
+    },
+  },
+      });
     }
-      res.status(200).json(posts);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
-    }
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
   }
+}

@@ -97,14 +97,12 @@ export default function MainPage() {
     const onSearchChange = async (searchQuery:string) => { 
     setSearch(searchQuery);
       try {
-      console.log(searchQuery);
         const result = await axios({
           url: "./api/search",
           method: "POST",
-          data:searchQuery
+          data:{searchQuery}
         });
         setPosts(result.data);
-        console.log(result.data);
         return(result.data)
       } catch (err) {
         console.error(err);

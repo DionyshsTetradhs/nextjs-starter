@@ -1,6 +1,6 @@
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["referentialIntegrity"]
+    previewFeatures = ["referentialIntegrity","fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -32,6 +32,8 @@ model Post {
     userId      String
     Post_replys    Post_replys[]
     @@index([userId])
+    @@fulltext([title])
+    @@fulltext([title,description])
 }
 
 model Post_replys {
