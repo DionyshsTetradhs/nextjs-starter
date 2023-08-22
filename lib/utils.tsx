@@ -1,5 +1,6 @@
 import { Messag, Message } from "../components/chat/types";
 import axios from "axios";
+import prisma from "./prisma"
 
 export function Cleanup(req: Messag[], id: string | string[]) {
   let clean_messages: Message[] = [];
@@ -40,3 +41,15 @@ export async function removeDuplicates(data: Messag[]) {
   return newData;
 }
 
+export async function searchPosts(search:string){
+      try {
+        const result = await axios({
+          url: "./api/search",
+          method: "POST",
+          data:search
+        });
+        return(result.data);
+      } catch (err) {
+        console.error(err);
+      }
+}

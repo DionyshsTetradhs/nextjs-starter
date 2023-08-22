@@ -1,14 +1,14 @@
+"use client"
 import React, { useEffect, useState, useRef } from "react"
 import { BiSearchAlt } from 'react-icons/bi';
 
-export default function Search() {
-
+export default function Search(props:any) {
+  
   const [visibility, setVisibility] = useState(true);
-  const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e:any) =>{
     e.preventDefault();
-    setInput("");
     setVisibility(!visibility);
     
   }
@@ -20,11 +20,7 @@ export default function Search() {
     setVisibility(!visibility);
   };
   
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const handleBlur = () => {
-    // Code to execute when the input loses focus
-    console.log('Input field lost focus');
     setVisibility(!visibility);
   };
   
@@ -35,7 +31,7 @@ export default function Search() {
           <div className="absolute container top-4 mx-0 min-w-full flex flex-col items-center">
       <form onSubmit={handleSubmit} className="absolute container top-1 mx-0 min-w-full flex flex-col items-center">
             
-        <input className="absolute animate-appear text-center outline-none bg-gray-100 border-gray-300 focus:outline-none rounded-md w-80 h-12 text-lg" autoFocus id="searchInput" ref={inputRef} onBlur={handleBlur} value={input} onChange={(e)=>{setInput(e.target.value)}} type="text" placeholder="Search"></input>
+        <input className="absolute animate-appear text-center outline-none bg-gray-100 border-gray-300 focus:outline-none rounded-md w-80 h-12 text-lg" autoFocus id="searchInput" ref={inputRef} onBlur={handleBlur} onChange={(e)=>{props.onSearch(e.target.value.toLowerCase())}} type="text" placeholder="Search"></input>
         <button type="submit"></button>
         
       </form>
@@ -44,4 +40,5 @@ export default function Search() {
       
   </>
   )
+
 }
