@@ -82,6 +82,12 @@ button {
   background: linear-gradient(180deg, #ff008c 0%, rgb(211, 9, 225) 100%);
 }
 
+.center-div {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @keyframes appear {
   from {
     transform: scale(0.3) translateY(-2em);
