@@ -48,7 +48,11 @@ export default function MainPage() {
   const [postId, setPostId] = useState("");
   const [username_p, setUsername_p] = useState("");
   const [search, setSearch] = useState("");
-  const [openedPostId, setOpenedPostId] = useState("");
+  const [togglePostExpand, setTogglePostExpand] = useState(false);
+  const [postUsername, setPostUsername] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postDescription, setPostDescription] = useState("");
+  const [postReplies, setPostReplies] = useState([]);
 
   function handleOnDrag(PostID: string, postID:string, username:string) {
     setUsername_p(username);
@@ -82,11 +86,25 @@ export default function MainPage() {
     setReplyToggle(false);
   }
 
-  const [togglePostExpand, setTogglePostExpand] = useState(false);
   
-  function handlePostClick(id:string){
+  async function handlePostClick(post_id:string, username:string, title:string, description:string){
     setTogglePostExpand(true);
-    setOpenedPostId(id);
+    setPostUsername(username);
+    setPostTitle(title);
+    setPostDescription(description);
+    const apiUrl = "./api/get_post_replies";
+    try {
+      const response = await axios({
+        url: apiUrl,
+        method: "POST",
+        data: {post_id},
+      });
+      const data = response.data;
+      console.log(data);
+      setPostReplies(data);
+    } catch (err) {
+      console.error(err.response);
+    }
     
   }
 
@@ -134,13 +152,13 @@ export default function MainPage() {
       )}
       <Navbar />
       <SearchBar onSearch={onSearchChange} value={search} />
-      <PostExpand onChange={handleTogglePostExpand} togglePostExtend={togglePostExpand} openedPostId={openedPostId}/>
+      <PostExpand onChange={handleTogglePostExpand} togglePostExtend={togglePostExpand} replies={postReplies}  username={postUsername} title={postTitle} description={postDescription}/>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
         
         {posts.map((post) => (
           <div
             key={post.id}
-            onClick={() => handlePostClick(post.id)}
+            onClick={() => handlePostClick(post.id, post.username, post.title, post.description)}
             draggable
             onDragStart={() => handleOnDrag(post.userId, post.id, post.username)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"

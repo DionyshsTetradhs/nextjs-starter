@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
 
-const Main = ({ onChange, togglePostExtend, openedPostId }) => {
-  const [comments, setComments] = useState([]);
+const Main = ({replies, onChange, togglePostExtend, username, title, description }) => {
+  const [comments, setComments] = useState(replies);
   const [newComment, setNewComment] = useState("");
   const [visibility, setVisibility] = useState(true);
 
   const addComment = () => {
+    console.log(replies);
+    setComments(replies);
     if (newComment.trim() === "") return;
     setComments((prevComments) => [...prevComments, newComment]);
     setNewComment("");
@@ -14,7 +16,6 @@ const Main = ({ onChange, togglePostExtend, openedPostId }) => {
 
   const handleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
     setVisibility(!visibility);
   };
 
@@ -31,16 +32,21 @@ const Main = ({ onChange, togglePostExtend, openedPostId }) => {
             </button>
             <div className="flex items-center justify-center bg-gray-500 bg-opacity-50">
               <div className="bg-white rounded-lg p-6 shadow-lg overflow-y-auto">
-                <h2 className="text-xl text-center font-bold mb-4">
-                  Post Title
+                <h2 className="text-xl text-center font-bold mb-4 pt-3">
+                 {title} 
                 </h2>
+                <p className="absolute top-2 left-2 text-center text-white shadow-lg bg-blue-300 rounded-lg p-1">
+                  {username}
+                </p>
                 <p className="mb-4 text-center">
-                  {openedPostId}
+                  {description}
                 </p>
                 <div className="border-t pt-4 overflow-y-auto max-h-80 text-center">
                   {comments.map((comment, index) => (
                     <div key={index} className="border-b pb-2 mb-2 text-center">
-                      {comment}
+                      <p>
+                      {comment.reply}
+                      </p>
                     </div>
                   ))}
                 </div>
