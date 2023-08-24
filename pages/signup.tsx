@@ -39,12 +39,18 @@ export default function Signin() {
   async function handleChangeUsername(e:ChangeEvent<HTMLInputElement>) {
     setUsername(e.target.value);
     const result = await checkUsername(e.target.value);
+    try{
+      
     if (result.data === ""){
       setUsernameValidation(true);
       
     }else{
       setUsernameValidation(false);
     };
+      
+    }catch(err){
+      console.error(err.response);
+    }
   }
   
   const handleChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
