@@ -1,16 +1,55 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const Main = ({replies, onChange, togglePostExtend, username, title, description }) => {
-  const [comments, setComments] = useState(replies);
+const Main = ({post_id, onChange, togglePostExtend, username, title, description }) => {
+    const fetchData = async()=>{
+      const apiUrl = "./api/get_post_replies";
+      const response = await axios({
+        url: apiUrl,
+        method: "POST",
+        data: {post_id},
+      });
+      setComments(response.data);
+    }
+  useEffect(() => {
+    const fetchData = async()=>{
+      const apiUrl = "./api/get_post_replies";
+      const response = await axios({
+        url: apiUrl,
+        method: "POST",
+        data: {post_id},
+      });
+      setComments(response.data);
+    }
+    fetchData();
+    // let variable = [];
+    // variable.push(...data);
+    // setComments(variable);
+    return () => { }
+  }, [togglePostExtend])
+  
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [visibility, setVisibility] = useState(true);
 
-  const addComment = () => {
-    console.log(replies);
-    setComments(replies);
+  async function addComment(){
     if (newComment.trim() === "") return;
-    setComments((prevComments) => [...prevComments, newComment]);
+    try{
+    await axios({
+      url: "./api/post_reply",
+      method: "POST",
+      data: {
+        reply:newComment,
+        postId:post_id,
+        createdAt: new Date().toISOString(),
+        img: "hello",
+      },
+    });
+    }catch(error){
+      console.error('Error posting post', error);
+    }
+    fetchData();
     setNewComment("");
   };
 
@@ -43,8 +82,12 @@ const Main = ({replies, onChange, togglePostExtend, username, title, description
                 </p>
                 <div className="border-t pt-4 overflow-y-auto max-h-80 text-center">
                   {comments.map((comment, index) => (
-                    <div key={index} className="border-b pb-2 mb-2 text-center">
-                      <p>
+                    <div key={index} className="grid grid-cols-3 items-center justify-center h-full gap-4 border-b pb-2 mb-2 text-center">
+
+                      <p className="rounded-lg bg-blue-300 p-4">
+                      {comment.username}
+                      </p>
+                      <p className="text-center">
                       {comment.reply}
                       </p>
                     </div>

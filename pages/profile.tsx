@@ -95,7 +95,7 @@ export default function Profile() {
                   className="flex justify-center items-center rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="Password"
                   name="password"
-                  placeholder="password"
+                  placeholder="New password"
                   required
                 />
               </div>
@@ -108,7 +108,7 @@ export default function Profile() {
                   type="Password"
                   name="password"
                   value={passwordV}
-                  placeholder="Confirm pass"
+                  placeholder="Confirm password"
                 />
               </div>
               <div className="mt-8 flex justify-center text-lg text-black">

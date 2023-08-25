@@ -17,7 +17,6 @@ export default async function handler(
             createdAt: "desc",
           },
         });
-      
         res.status(200).send( data );
     } catch (error) {
       console.error(error);

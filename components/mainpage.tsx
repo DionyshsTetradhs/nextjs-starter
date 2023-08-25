@@ -88,24 +88,11 @@ export default function MainPage() {
 
   
   async function handlePostClick(post_id:string, username:string, title:string, description:string){
-    setTogglePostExpand(true);
     setPostUsername(username);
     setPostTitle(title);
     setPostDescription(description);
-    const apiUrl = "./api/get_post_replies";
-    try {
-      const response = await axios({
-        url: apiUrl,
-        method: "POST",
-        data: {post_id},
-      });
-      const data = response.data;
-      console.log(data);
-      setPostReplies(data);
-    } catch (err) {
-      console.error(err.response);
-    }
-    
+    setPostId(post_id);
+    setTogglePostExpand(true);
   }
 
   function handleTogglePostExpand(){
@@ -152,7 +139,7 @@ export default function MainPage() {
       )}
       <Navbar />
       <SearchBar onSearch={onSearchChange} value={search} />
-      <PostExpand onChange={handleTogglePostExpand} togglePostExtend={togglePostExpand} replies={postReplies}  username={postUsername} title={postTitle} description={postDescription}/>
+      <PostExpand onChange={handleTogglePostExpand} togglePostExtend={togglePostExpand} post_id={postId}  username={postUsername} title={postTitle} description={postDescription}/>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
         
         {posts.map((post) => (
