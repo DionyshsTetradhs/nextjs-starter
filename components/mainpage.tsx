@@ -60,8 +60,17 @@ export default function MainPage() {
     setPostId(postID);
   }
 
-  function handleOnDrop(Type: string) {
+  async function handleOnDrop(Type: string) {
     if (Type === "chat") {
+      try {
+          await axios({
+          url: "./api/post_init",
+          method: "POST",
+          data:{postid: postId}
+        });
+      } catch (err) {
+        console.error(err);
+      }
       setChatToggle(true);
     } else if (Type === "post") {
       setReplyToggle(true);

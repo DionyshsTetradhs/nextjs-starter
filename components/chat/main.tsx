@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import { useEffect, useState } from "react";
 import axios, { Axios } from "axios";
@@ -5,7 +6,7 @@ import { Input } from "./Input";
 import { MessageList } from "./MessageList";
 import { Message } from "./types";
 import { toPusherKey } from "./../../lib/utils"
-import PusherClient from "pusher-js";
+import Pusher from "pusher-js";
 
 const initialMessages: Message[] = [
   {
@@ -29,6 +30,7 @@ const Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
   const [username, setUsername] = useState("");
   const receiverID = props.id;
+  const chatId = "123";
 
   useEffect(() => {
     const conv = async () => {
@@ -44,12 +46,40 @@ const Chat: React.FC<ChildProps> = (props) => {
       }
     };
     conv();
-
-    PusherClient.subscribe(
-      toPusherKey(`user:$(sessionId):incoming_friend_request`)
-    )
-    
   }, []);
+
+  
+  useEffect(()=>{
+  var pusher:Pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,{cluster: "eu"})
+  var channel = (pusher as any).subscribe(`chat:${chatId}`);
+
+    const messageHandler = (message:any) =>{
+      setMessages((prev) => [
+        {
+        
+    id: messages.length,
+    content: message,
+    author: "us",
+        }
+        , ...prev])
+    }
+    channel.bind('incoming-message', messageHandler)
+    
+    return()=>{
+      channel.unsubscribe(
+       `chat:${chatId}`
+      )
+      channel.unbind('incoming-message', messageHandler)
+    }
+  }, [messages])
+
+  
+  // var pusher:Pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,{cluster: "eu"})
+  // var channel = (pusher as any).subscribe("my-channel");
+  // channel.bind("my-event", function(data:any){
+  //   alert(JSON.stringify(data));
+  // });
+  
 
   const conv = async () => {
     const conversation = await axios({
