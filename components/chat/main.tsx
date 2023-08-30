@@ -4,6 +4,8 @@ import axios, { Axios } from "axios";
 import { Input } from "./Input";
 import { MessageList } from "./MessageList";
 import { Message } from "./types";
+import { toPusherKey } from "./../../lib/utils"
+import PusherClient from "pusher-js";
 
 const initialMessages: Message[] = [
   {
@@ -42,6 +44,11 @@ const Chat: React.FC<ChildProps> = (props) => {
       }
     };
     conv();
+
+    PusherClient.subscribe(
+      toPusherKey(`user:$(sessionId):incoming_friend_request`)
+    )
+    
   }, []);
 
   const conv = async () => {

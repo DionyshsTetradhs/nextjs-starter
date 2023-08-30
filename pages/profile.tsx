@@ -1,17 +1,33 @@
 "use client";
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import axios from "axios";
-import * as EmailValidator from 'email-validator';
 import { passwordStrength } from 'check-password-strength'
+import { useRouter } from 'next/router'
 
 export default function Profile() {
-  const [email,setEmail] = useState("");
+  useEffect(() => {
+    const fetchData = async()=>{
+      const apiUrl = "./api/get_user";
+      const storedKey = localStorage.getItem('key');
+      const storedUserID = localStorage.getItem('userID');
+      const response = await axios({
+        url: apiUrl,
+        method: "POST",
+        data:{storedKey, storedUserID}
+      });
+      setUsername(response.data.username);
+    }
+    fetchData();
+    return undefined ;
+  }, [])
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordV, setPasswordV] = useState("");
-  const [emailValidation, setEmailValidation] = useState(true);
   const [usernameValidation, setUsernameValidation] = useState(true);
   const [passStrength, setPassStrength] = useState("");
+  var passwordHash = require('password-hash');
+  const router = useRouter()
   
   const handleChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -31,15 +47,23 @@ export default function Profile() {
       console.error(err.response);
     }
   };
-  // async function formSubmit(){
-  //   
-  //   const hashedPassword:string = passwordHash.generate(pass);
-  // }
   
-  function handleChangeEmail(e:ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    setEmail(e.target.value);
-    setEmailValidation(EmailValidator.validate(e.target.value));
+  async function formSubmit(e:FormEvent){
+   e.preventDefault()
+    if (password === passwordV && usernameValidation){
+      const hashedPassword:string = passwordHash.generate(password);
+      const apiUrl = "./api/save_user";
+      const storedKey = localStorage.getItem('key');
+      const storedUserID = localStorage.getItem('userID');
+      await axios({
+        url: apiUrl,
+        method: "POST",
+        data:{storedKey, storedUserID, username, hashedPassword}
+      });
+      router.push('/') 
+    }else{
+      alert("Password is not the same or username exists!")
+    }
   }
   
   async function handleChangeUsername(e:ChangeEvent<HTMLInputElement>) {
@@ -65,19 +89,7 @@ export default function Profile() {
             <div className="mb-8 flex flex-col items-center">
               <span className="text-gray-300">Change your profile information</span>
             </div>
-            <form  className="flex flex-col items-center justify-center">
-              <div className="text-lg">
-                <input
-                  className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
-                  onChange={handleChangeEmail}
-                  type="text"
-                  name="name"
-                  value={email}
-                  placeholder="email"
-                />
-              </div>
-              {emailValidation?<p className="errors text-green-800">valid </p>:<p className="errors text-red-800">not valid</p>}
-
+            <form onSubmit={formSubmit} className="flex flex-col items-center justify-center">
               <div className=" text-lg">
                 <input
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"

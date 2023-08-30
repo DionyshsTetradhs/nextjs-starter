@@ -23,6 +23,10 @@ export function Cleanup(req: Messag[], id: string | string[]) {
   return (clean_messages);
 }
 
+export function toPusherKey(key:string){
+  return key.replace(/:/g, '__');
+}
+
 
 export async function removeDuplicates(data: Messag[]) {
   const newData: Messag[] = [];
