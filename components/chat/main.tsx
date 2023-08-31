@@ -23,14 +23,15 @@ const initialMessages: Message[] = [
 
 // Define the interface for props
 interface ChildProps {
-  id: string;
+  id: string,
+  chatId: string;
 }
 
 const Chat: React.FC<ChildProps> = (props) => {
   const [messages, setMessages] = useState(initialMessages);
   const [username, setUsername] = useState("");
   const receiverID = props.id;
-  const chatId = "123";
+  const chatId = props.chatId;
 
   useEffect(() => {
     const conv = async () => {

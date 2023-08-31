@@ -8,8 +8,8 @@ import Chat from "./chat/main";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchBar from "../components/search";
 import ChatText from "../components/chat_friends/main";
-import Reply_toggle from "../components/reply_toggle"; 
-import PostExpand from "../components/post_expand"; 
+import Reply_toggle from "../components/reply_toggle";
+import PostExpand from "../components/post_expand";
 import { searchPosts } from "../lib/utils";
 
 export default function MainPage() {
@@ -53,8 +53,9 @@ export default function MainPage() {
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postReplies, setPostReplies] = useState([]);
+  const [chatID, setChatID] = useState("");
 
-  function handleOnDrag(PostID: string, postID:string, username:string) {
+  function handleOnDrag(PostID: string, postID: string, username: string) {
     setUsername_p(username);
     setPostID(PostID);
     setPostId(postID);
@@ -63,14 +64,20 @@ export default function MainPage() {
   async function handleOnDrop(Type: string) {
     if (Type === "chat") {
       try {
-          await axios({
+        await axios({
           url: "./api/post_init",
           method: "POST",
-          data:{postid: postId}
+          data: { postid: postId },
         });
       } catch (err) {
         console.error(err);
       }
+      const result = await axios({
+        url: "./api/get_chat_id",
+        method: "POST",
+        data: { receiverID },
+      });
+      setChatID(result.data);
       setChatToggle(true);
     } else if (Type === "post") {
       setReplyToggle(true);
@@ -95,8 +102,12 @@ export default function MainPage() {
     setReplyToggle(false);
   }
 
-  
-  async function handlePostClick(post_id:string, username:string, title:string, description:string){
+  async function handlePostClick(
+    post_id: string,
+    username: string,
+    title: string,
+    description: string,
+  ) {
     setPostUsername(username);
     setPostTitle(title);
     setPostDescription(description);
@@ -104,33 +115,39 @@ export default function MainPage() {
     setTogglePostExpand(true);
   }
 
-  function handleTogglePostExpand(){
-    setTogglePostExpand(!togglePostExpand)
+  function handleTogglePostExpand() {
+    setTogglePostExpand(!togglePostExpand);
   }
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
-  function handleChildEvent(buttonId: string) {
+  async function handleChildEvent(buttonId: string) {
     setPostID(buttonId);
+    const result = await axios({
+      url: "./api/get_chat_id",
+      method: "POST",
+      data: { receiverID },
+    });
+    setChatID(result.data);
     setMessagesToggle(false);
     setChatToggle(true);
   }
-  
-    const onSearchChange = async (searchQuery:string) => { 
+
+  const onSearchChange = async (searchQuery: string) => {
     setSearch(searchQuery);
-      try {
-        const result = await axios({
-          url: "./api/search",
-          method: "POST",
-          data:{searchQuery}
-        });
-        setPosts(result.data);
-        return(result.data)
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      const result = await axios({
+        url: "./api/search",
+        method: "POST",
+        data: { searchQuery },
+      });
+      setPosts(result.data);
+      return (result.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -143,20 +160,33 @@ export default function MainPage() {
           >
             <MenuIcon />
           </button>
-          <Chat id={receiverID} />
+          <Chat id={receiverID} chatId={chatID} />
         </>
       )}
       <Navbar />
       <SearchBar onSearch={onSearchChange} value={search} />
-      <PostExpand onChange={handleTogglePostExpand} togglePostExtend={togglePostExpand} post_id={postId}  username={postUsername} title={postTitle} description={postDescription}/>
+      <PostExpand
+        onChange={handleTogglePostExpand}
+        togglePostExtend={togglePostExpand}
+        post_id={postId}
+        username={postUsername}
+        title={postTitle}
+        description={postDescription}
+      />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
-        
         {posts.map((post) => (
           <div
             key={post.id}
-            onClick={() => handlePostClick(post.id, post.username, post.title, post.description)}
+            onClick={() =>
+              handlePostClick(
+                post.id,
+                post.username,
+                post.title,
+                post.description,
+              )}
             draggable
-            onDragStart={() => handleOnDrag(post.userId, post.id, post.username)}
+            onDragStart={() =>
+              handleOnDrag(post.userId, post.id, post.username)}
             className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
           >
             <h1>{post.username}</h1>
@@ -181,7 +211,7 @@ export default function MainPage() {
         : replyToggle
         ? (
           <>
-            <Reply_toggle postId={postId} username={username_p} ></Reply_toggle>
+            <Reply_toggle postId={postId} username={username_p}></Reply_toggle>
             <button
               className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
               onClick={minimizePost}
