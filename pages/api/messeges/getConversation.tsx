@@ -38,7 +38,7 @@ export default async function handler(
         });
         username = username.username;
         const clean_data: Message[] = Cleanup(data, id);
-        console.log(clean_data);
+        // console.log(clean_data);
         res.status(200).send({ clean_data, username });
       } else {
         res.status(401).send("Not authed!");

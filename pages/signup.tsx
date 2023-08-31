@@ -109,7 +109,7 @@ export default function Signin() {
     } else if ((EmailValidator.validate(email)===false)) {
       alert("Please fill the inputs again!");
     } else {
-      console.log("Password is not the same");
+      alert("Password is not the same");
     }
   }
 

@@ -128,7 +128,7 @@ export default function MainPage() {
     const result = await axios({
       url: "./api/get_chat_id",
       method: "POST",
-      data: { receiverID },
+      data: { buttonId },
     });
     setChatID(result.data);
     setMessagesToggle(false);

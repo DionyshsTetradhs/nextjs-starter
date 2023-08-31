@@ -51,15 +51,11 @@ const Chat: React.FC<ChildProps> = (props) => {
 
   
   useEffect(()=>{
-  console.log("incoming12....");
   var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,{cluster: "eu"})
   var channel = (pusher as any).subscribe(toPusherKey(`chat:${chatId}`));
-    // pusherClient.subscribe(toPusherKey(`chat:${chatId}:incoming-message`))
 
-    const messageHandler = (message:any) =>{
-      console.log("incoming....", message);
-      console.log("incoming....", messages);
-      setMessages([...messages,message])
+    function messageHandler(){
+      conv();
     }
     channel.bind('incoming-message', messageHandler)
     

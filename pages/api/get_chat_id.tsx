@@ -10,7 +10,7 @@ export default async function handler(
         const id = req?.headers.userid;
         const {friend_id} = req.body;
         try {
-          const data = await prisma.Chat.findFirst({
+          await prisma.Chat.findFirst({
             where: {
               OR: [
                 { user_id: id, friend_id: friend_id },
@@ -19,7 +19,7 @@ export default async function handler(
             },
           });
 
-          res.status(200).send(data.id);
+          res.status(200).send("ChatID");
         } catch (error) {
           console.error("Error while fetching data:", error);
           res.status(500).send("Internal Server Error");

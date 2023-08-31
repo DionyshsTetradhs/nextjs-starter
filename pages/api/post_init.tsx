@@ -37,9 +37,9 @@ export default async function handler(
                 // Other columns and values
               },
             });
-            console.log("New chat log added");
+            // console.log("New chat log added");
           } else {
-            console.log("Chat already exists:", existingMessage);
+            // console.log("Chat already exists:", existingMessage);
           }
 
           res.status(200).send(200);
