@@ -1,16 +1,19 @@
 import * as React from "react";
 import { useState } from "react";
 
-let key = 2;
+interface ChildProps {
+  id: number,
+  sendMessage: (messageData: { id: number; content: string; author: string }) => void;
+}
 
-export const Input = ({ sendMessage }) => {
+export const Input: React.FC<ChildProps> = ({ sendMessage , id}) => {
   const [message, setMessage] = useState("");
   return (
     <form
       className="chat-input-container"
       onSubmit={e => {
         sendMessage({
-          id: key++,
+          id: id,
           content: message,
           author: "us"
         });

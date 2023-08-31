@@ -1,13 +1,17 @@
 import prisma from "./../../../lib/prisma.js";
 import { Auth } from "./../../../lib/auth";
 import { NextApiRequest, NextApiResponse } from 'next';
+import { pusherServer } from "../../../lib/pusher";
+import { toPusherKey } from "../../../lib/utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const authed = await Auth([req?.headers.key, req?.headers.userid]);
   if (authed) {
     const id = req?.headers.userid;
-    const { message, receiverID } = req.body;
+    const { message, receiverID, chatId } = req.body;
     if (req.method == "POST") {
+      pusherServer.trigger(toPusherKey(`chat:${chatId}`), "incoming-message",message)
+      
       try {
         await prisma.Messages.create({
           data: {

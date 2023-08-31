@@ -51,25 +51,20 @@ const Chat: React.FC<ChildProps> = (props) => {
 
   
   useEffect(()=>{
-  var pusher:Pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,{cluster: "eu"})
-  var channel = (pusher as any).subscribe(`chat:${chatId}`);
+  console.log("incoming12....");
+  var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,{cluster: "eu"})
+  var channel = (pusher as any).subscribe(toPusherKey(`chat:${chatId}`));
+    // pusherClient.subscribe(toPusherKey(`chat:${chatId}:incoming-message`))
 
     const messageHandler = (message:any) =>{
-      setMessages((prev) => [
-        {
-        
-    id: messages.length,
-    content: message,
-    author: "us",
-        }
-        , ...prev])
+      console.log("incoming....", message);
+      console.log("incoming....", messages);
+      setMessages([...messages,message])
     }
     channel.bind('incoming-message', messageHandler)
     
     return()=>{
-      channel.unsubscribe(
-       `chat:${chatId}`
-      )
+      channel.unsubscribe(`chat:${chatId}`)
       channel.unbind('incoming-message', messageHandler)
     }
   }, [messages])
@@ -92,15 +87,15 @@ const Chat: React.FC<ChildProps> = (props) => {
     setUsername(conversation.data.username);
   };
 
-  const sendMessage = async (message: Message) => {
+  const sendMessage = async (message:any) => {
     // setMessages([...messages, message]);
     try {
       await axios({
-        data: { message, receiverID },
+        data: { message, receiverID, chatId },
         url: "./api/messeges/send",
         method: "POST",
       });
-      await conv();
+      // await conv();
     } catch (error) {
       console.error("Error sending message", error);
     }
@@ -112,7 +107,7 @@ const Chat: React.FC<ChildProps> = (props) => {
         <h1 className="text-4xl font-bold">{username}</h1>
       </div>
       <MessageList messages={messages} />
-      <Input sendMessage={sendMessage} />
+      <Input sendMessage={sendMessage} id={messages.length} />
     </div>
   );
 };
