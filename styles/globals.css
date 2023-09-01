@@ -79,7 +79,7 @@ button {
 .message-bubble-container.us .message-bubble {
   color: white;
   border-radius: 20px 20px 20px 3px;
-  background: linear-gradient(180deg, #ff008c 0%, rgb(211, 9, 225) 100%);
+  background: linear-gradient(180deg, #0074e4 0%, rgb(10, 9, 225) 100%);
 }
 
 .center-div {

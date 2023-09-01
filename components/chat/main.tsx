@@ -98,7 +98,7 @@ const Chat: React.FC<ChildProps> = (props) => {
   };
 
   return (
-    <div className="absolute bottom-0 right-0 z-[10]">
+    <div className="absolute overflow-hidden bottom-0 right-0 z-[10]">
       <div className="bg-blue-500 bg-opacity-50 text-white text-center py-4 rounded-lg">
         <h1 className="text-4xl font-bold">{username}</h1>
       </div>

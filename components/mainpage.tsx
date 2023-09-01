@@ -151,7 +151,7 @@ export default function MainPage() {
   };
 
   return (
-    <>
+    <div className="bg-gradient-to-b from-blue-400 via-blue-300 to-blue-200 h-screen "> 
       {chatToggle && (
         <>
           <button
@@ -187,11 +187,11 @@ export default function MainPage() {
             draggable
             onDragStart={() =>
               handleOnDrag(post.userId, post.id, post.username)}
-            className="p-9 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white text-center"
+            className="p-4 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-blue-500 via-blue-400 to-blue-100 text-white text-center"
           >
-            <h1>{post.username}</h1>
-            <h2 className="font-bold text-2xl mb-2">{post.title}</h2>
-            <p>{post.description}</p>
+            <h2 className="bg-white text-black rounded-full px-2 w-min">{post.username}</h2>
+            <h1 className="font-bold text-2xl mb-2">{post.title}</h1>
+            <p className="bg-white px-2 text-black rounded-full">{post.description}</p>
           </div>
         ))}
       </div>
@@ -247,10 +247,10 @@ export default function MainPage() {
             <>
               <ChatText onChildEvent={handleChildEvent} />
               <button
-                className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
+                className="absolute fixed overflow-hidden bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
                 onClick={minimizeChat}
               >
-                <MenuIcon />
+                <MenuIcon className="overflow-hidden"/>
               </button>
               {" "}
             </>
@@ -281,6 +281,6 @@ export default function MainPage() {
           )
           : <></>}
       </div>
-    </>
+    </div>
   );
 }

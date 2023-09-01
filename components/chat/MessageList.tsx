@@ -8,8 +8,21 @@ interface Props {
 }
 
 export const MessageList = ({ messages}: Props) => {
+  const containerRef = React.useRef(null);
+
+  // Function to scroll to the bottom of the container
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  };
+
+  // Scroll to the bottom when the component renders or when messages change
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   return (
-    <div className="messages-container">
+    <div ref={containerRef} className="border-t pt-4 overflow-y-auto max-h-80 text-center bg-blue-200 bg-opacity-75">
       <AnimatePresence initial={false}>
         {messages.map(message => (
           <motion.div
