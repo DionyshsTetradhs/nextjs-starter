@@ -3,9 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Router from "next/router";
+import { useRouter } from 'next/router'
 import { BiLogOut } from "react-icons/bi";
-import { LuSettings } from "react-icons/lu";
-import Settings from "./settings";
+import {BsFillSunFill} from "react-icons/bs";
+import {MdDarkMode} from "react-icons/md"
 
 export default function Navbar() {
   useEffect(() => {
@@ -13,8 +14,8 @@ export default function Navbar() {
   }, []);
 
   const [username, setUsername] = useState("");
-  let [settings, setSettings] = useState(false);
-  const myDivRef = useRef(null);
+  let [mode, setMode] = useState(false);
+  const router = useRouter()
 
   const sendreq = async () => {
     const data = await axios({
@@ -29,29 +30,20 @@ export default function Navbar() {
     Router.reload();
   }
 
-  useEffect(() => {
-    const divElement = myDivRef.current;
-
-    const handleDocumentClick = (event) => {
-      if (divElement && !divElement.contains(event.target)) {
-        setSettings(false);
-      }
-    };
-
-    document.addEventListener("click", handleDocumentClick);
-
-    return () => {
-      document.removeEventListener("click", handleDocumentClick);
-    };
-  }, []);
-
-  function handleSettings() {
+  function handleMode() {
     console.log("settings");
-    if (settings === false) {
-      setSettings(true);
+    // document.body.classList.toggle('dark');
+    document.documentElement.classList.add("dark");
+    if (mode === false) {
+      setMode(true);
     } else {
-      setSettings(false);
+      setMode(false);
     }
+  }
+  
+  function handleProfile(e:any) {
+   e.preventDefault()
+    router.push('/profile') 
   }
 
   return (
@@ -62,27 +54,28 @@ export default function Navbar() {
       >
         <BiLogOut />
       </button>
-      <div className="absolute left-24 bg-blue-500 bg-opacity-50 text-white text-center top-3 rounded-lg">
-        <h1 className="text-4xl font-bold p-1">{username}</h1>
+      <div className="absolute left-24 bg-blue-500 dark:bg-black-500 bg-opacity-50 text-white text-center top-3 rounded-lg">
+        <button onClick={handleProfile}>
+        <h1 className="text-4xl font-bold p-1 border-2 border-gray-200 rounded-lg">{username}</h1>
+        </button>
       </div>
-      {settings
+      {mode
         ? (
           <>
-            <Settings></Settings>
             <button
-              className="absolute z-50 top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse"
-              onClick={handleSettings}
+              className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-black-800 hover:text-white rounded-full p-4 absolute animate-pulse"
+              onClick={handleMode}
             >
-              <LuSettings />
+              <MdDarkMode />
             </button>
           </>
         )
         : (
           <button
-            className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse"
-            onClick={handleSettings}
+            className="absolute zindex-[-10] top-3 right-2 bg-blue-200 hover:bg-blue-300 text-white-800 hover:text-black rounded-full p-4 absolute animate-pulse"
+            onClick={handleMode}
           >
-            <LuSettings />
+            <BsFillSunFill />
           </button>
         )}
     </div>

@@ -151,7 +151,7 @@ export default function MainPage() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-400 via-blue-300 to-blue-200 h-screen "> 
+    <div className="bg-gradient-to-b from-blue-400 via-blue-300 to-blue-200 h-screen dark:bg-black-500"> 
       {chatToggle && (
         <>
           <button
