@@ -181,9 +181,9 @@ export default function MainPage() {
             onClick={() =>
               handlePostClick(
                 post.id,
-                post.username,
-                post.title,
-                post.description,
+                post?.username,
+                post?.title,
+                post?.description,
               )}
             draggable
             onDragStart={() =>

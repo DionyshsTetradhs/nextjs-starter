@@ -16,7 +16,6 @@ export default function Search(props:any) {
   const handleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const button: HTMLButtonElement = event.currentTarget;
     setVisibility(!visibility);
   };
   

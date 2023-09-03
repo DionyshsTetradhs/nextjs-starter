@@ -12,16 +12,25 @@ export default async function handler(
       posts = await prisma.Post.findMany({
         take: 9,
       });
-    } else {
+    } else if (search.startsWith("user:")) {
+      const clean_search = search.substring("user:".length);
+      console.log("clean-search", clean_search);
       posts = await prisma.Post.findMany({
-take: 9,
-  orderBy: {
-    _relevance: {
-      fields: ['description','title'],
-      search: search,
-      sort: 'desc',
-    },
-  },
+  take: 9,
+ where: {
+          username: clean_search,
+      },
+      });
+    }else{
+      posts = await prisma.Post.findMany({
+  take: 9,
+    orderBy: {
+      _relevance: {
+        fields: ['description','title'],
+        search: search,
+        sort: 'desc',
+        },
+        },
       });
     }
     res.status(200).json(posts);
