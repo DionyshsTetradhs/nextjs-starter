@@ -31,14 +31,21 @@ export default function Navbar() {
   }
 
   function handleMode() {
-    console.log("settings");
     // document.body.classList.toggle('dark');
     if (mode === false) {
-      document.querySelector("html").setAttribute("data-theme", "black");
+      // document.querySelector("html").setAttribute("data-theme", "black");
+      const body = document.body;
+      body.style.backgroundColor = "black"; // Set the background color to black
+      body.style.color = "white";
+      body.style.backgroundImage = 'linear-gradient(to bottom, #000000, #CCCCCC, #000000)';
       setMode(true);
     } else {
       setMode(false);
-      document.querySelector("html").setAttribute("data-theme","cmyk");
+      const body = document.body;
+      body.style.backgroundColor = "white"; // Set the background color to black
+      body.style.color = "black";
+      body.style.backgroundImage = 'linear-gradient(to bottom, #6299E1, #FFFFFF, #CCCCCC, #FFFFFF, #6299E1)';
+      // document.querySelector("html").setAttribute("data-theme","cmyk");
     }
   }
   

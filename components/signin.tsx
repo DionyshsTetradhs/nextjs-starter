@@ -15,14 +15,20 @@ export default function Signin() {
   }, [success]);
 
   const main_send = async () => {
+    try{
     const { data } = await axios({
       url: "./api/signin_user",
       method: "POST",
       data: { email, pass },
     });
-    window.localStorage.setItem("userID", data.userID);
-    window.localStorage.setItem("key", data.key);
-    setSuccess(true);
+      window.localStorage.setItem("userID", data.userID);
+      window.localStorage.setItem("key", data.key);
+      setSuccess(true);
+    }catch(error){
+      alert("Wrong email or password!")
+      console.log(error)
+      
+    }
   };
 
   function handleSubmit(event:any) {
@@ -42,8 +48,8 @@ export default function Signin() {
                 alt=""
                 srcset=""
               /> */}
-              <h1 className="mb-2 text-2xl ">Social Network</h1>
-              <span className="text-gray-300">Enter Login Details</span>
+              <h1 className="mb-2 text-2xl ">S.N.</h1>
+              <span className="text-gray-300">Enter login details below</span>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-4 text-lg">

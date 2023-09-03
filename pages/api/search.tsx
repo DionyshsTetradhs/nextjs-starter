@@ -14,7 +14,6 @@ export default async function handler(
       });
     } else if (search.startsWith("user:")) {
       const clean_search = search.substring("user:".length);
-      console.log("clean-search", clean_search);
       posts = await prisma.Post.findMany({
   take: 9,
  where: {
