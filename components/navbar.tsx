@@ -6,14 +6,17 @@ import Router from "next/router";
 import { useRouter } from 'next/router'
 import { BiLogOut } from "react-icons/bi";
 import {BsFillSunFill} from "react-icons/bs";
-import {MdDarkMode} from "react-icons/md"
+import {MdDarkMode} from "react-icons/md";
+import {MdQuestionMark} from "react-icons/md";
 
 export default function Navbar() {
   useEffect(() => {
     sendreq();
+    document.body.style.backgroundImage = 'linear-gradient(to bottom, #98b4fa, #FFFFFF, #CCCCCC, #FFFFFF, #98b4fa)';
   }, []);
 
   const [username, setUsername] = useState("");
+  const [help, setHelp] = useState(false);
   let [mode, setMode] = useState(false);
   const router = useRouter()
 
@@ -25,27 +28,27 @@ export default function Navbar() {
     setUsername(data.data);
   };
 
+  function handleHelp(){
+      setHelp(!help);
+  }
+  
+
   function logout() {
     localStorage.clear();
     Router.reload();
   }
 
   function handleMode() {
-    // document.body.classList.toggle('dark');
     if (mode === false) {
-      // document.querySelector("html").setAttribute("data-theme", "black");
-      const body = document.body;
-      body.style.backgroundColor = "black"; // Set the background color to black
-      body.style.color = "white";
-      body.style.backgroundImage = 'linear-gradient(to bottom, #000000, #CCCCCC, #000000)';
+      document.body.style.backgroundImage = 'linear-gradient(to bottom, #000000, #CCCCCC, #CCCCCC, #000000)';
+      document.body.style.backgroundRepeat = 'repeat';
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
       setMode(true);
     } else {
+      document.body.style.backgroundImage = 'linear-gradient(to bottom, #98b4fa, #FFFFFF, #CCCCCC, #FFFFFF, #98b4fa)';
+      document.body.style.backgroundRepeat = 'repeat';
       setMode(false);
-      const body = document.body;
-      body.style.backgroundColor = "white"; // Set the background color to black
-      body.style.color = "black";
-      body.style.backgroundImage = 'linear-gradient(to bottom, #6299E1, #FFFFFF, #CCCCCC, #FFFFFF, #6299E1)';
-      // document.querySelector("html").setAttribute("data-theme","cmyk");
     }
   }
   
@@ -55,14 +58,21 @@ export default function Navbar() {
   }
 
   return (
-    <div className="flex">
+    <div >
+            <button
+              id="myButton"
+              onClick={handleHelp}
+              className="absolute zindex-[-10] top-3 right-16 bg-blue-200 hover:bg-blue-300 text-black-800 hover:text-white rounded-full p-4 animate-pulse"
+            >
+              <MdQuestionMark/>
+            </button>
       <button
         className="absolute zindex-[-10] top-3 left-2 bg-blue-200 hover:bg-blue-300 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse"
         onClick={logout}
       >
         <BiLogOut />
       </button>
-      <div className="absolute md:left-24 left-12 bg-blue-500 bg-black-500 bg-opacity-50 text-white text-center md:top-3 top-5 rounded-lg">
+      <div className="absolute md:left-24 left-14 bg-blue-500 bg-black-500 bg-opacity-50 text-white text-center md:top-3 top-5 rounded-lg">
         <button onClick={handleProfile}>
         <h1 className="md:text-4xl text-2xl font-bold md:p-1 md:border-2 border-1 border-gray-200 rounded-lg">{username}</h1>
         </button>
@@ -86,6 +96,11 @@ export default function Navbar() {
             <BsFillSunFill />
           </button>
         )}
+      {help?(<><div className="absolute z-50 top-14 right-24 bg-blue-400 rounded-lg p-5">
+        <ul>
+          <li>Search for users(user:)</li>
+          
+        </ul></div></>):<></>}
     </div>
   );
 }

@@ -22,7 +22,7 @@ export default function Main({ onChildEvent }) {
   }, []);
 
   return (
-    <div className="absolute bottom-0 right-1 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-9 space-x-1">
+    <div className="absolute border-t pt-4 overflow-y-auto max-h-80 bottom-0 right-1 z-10 flex flex-col items-center bg-blue-400 rounded-lg p-9 space-x-1">
       {list.map((user) => (
         <button
           id={user.id}

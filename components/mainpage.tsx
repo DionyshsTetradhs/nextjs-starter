@@ -149,14 +149,15 @@ export default function MainPage() {
     } catch (err) {
       console.error(err);
     }
+    //bg-gradient-to-b from-blue-200 via-gray-300 to-blue-200 
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-200 via-gray-300 to-blue-200 h-screen"> 
+    <div className="md:h-screen"> 
       {chatToggle && (
         <>
           <button
-            className="absolute fixed bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
+            className="absolute overflow-hidden text-white fixed bottom-4 right-6 w-6 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
             onClick={minimizeChat}
           >
             <MenuIcon />
@@ -201,7 +202,7 @@ export default function MainPage() {
         ? (
           <>
             <button
-              className="absolute fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
+              className="absolute text-white fixed bottom-4 left-0 bg-blue-500 h-12 w-12 z-[20] "
               onClick={minimizePost}
             >
               <MenuIcon />
@@ -229,7 +230,7 @@ export default function MainPage() {
                 handleOnDrop("post");
               }}
               onDragOver={handleDragOver}
-              className="absolute md:scale-150 bottom-0 md:left-[-10%] md:w-64 px-10 md:h-64 bg-blue-400 rounded-full transform  translate-y-1/2 md:translate-x-8 translate-x-0 scale-120 left-[-30%] w-64 h-64"
+              className="absolute md:scale-150 bottom-0 md:left-[-10%] md:w-64 px-10 md:h-64 bg-blue-600 rounded-full transform  translate-y-1/2 md:translate-x-8 translate-x-0 scale-120 left-[-30%] w-64 h-64"
             >
               <h2 className="text-center absolute overflow-hidden shadow-md text-white scale-100 bottom-0 left-[-10%] w-64 px-10 h-64 rounded-full transform  translate-y-14 translate-x-16">
                 Post
@@ -248,10 +249,10 @@ export default function MainPage() {
             <>
               <ChatText onChildEvent={handleChildEvent} />
               <button
-                className="absolute fixed overflow-hidden bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
+                className="absolute text-white fixed overflow-hidden bottom-4 right-0 translate-x-5 bg-blue-500 h-12 w-12 z-[20] "
                 onClick={minimizeChat}
               >
-                <MenuIcon className="overflow-hidden"/>
+                <MenuIcon/>
               </button>
               {" "}
             </>
@@ -267,7 +268,7 @@ export default function MainPage() {
                   handleOnDrop("chat");
                 }}
                 onDragOver={handleDragOver}
-                className="absolute bottom-0 md:right-[-5%] right-[-30%] px-10 md:w-64 md:h-64 bg-blue-400 rounded-full transform translate-y-1/2 md:translate-x-8 translate-x-0 md:scale-150 scale-120 w-64 h-64"
+                className="absolute bottom-0 md:right-[-5%] right-[-30%] px-10 md:w-64 md:h-64 bg-blue-600 rounded-full transform translate-y-1/2 md:translate-x-8 translate-x-0 md:scale-150 scale-120 w-64 h-64"
               >
                 <h2 className="text-center overflow-hidden shadow-md text-white  absolute scale-100 bottom-0 w-64 h-64 right-[40%] rounded-full transform translate-y-14 translate-x-16">
                   Chat

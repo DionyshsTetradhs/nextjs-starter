@@ -26,7 +26,6 @@ export const Input: React.FC<ChildProps> = ({ sendMessage , id}) => {
         type="text"
         onChange={({ target }) => setMessage(target.value)}
       />
-      <button></button>
     </form>
   );
 };
