@@ -62,7 +62,7 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
     <>
       {togglePostExtend
         ? (
-          <div className="absolute center-div z-20 w-94 flex items-center justify-center">
+          <div className="absolute center-div md:center-div-md z-20">
             <button
               onClick={onChange}
               className="absolute top-3 right-[2%] bg-red-200 rounded-full transform translate-x-0 w-6"

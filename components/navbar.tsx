@@ -33,11 +33,12 @@ export default function Navbar() {
   function handleMode() {
     console.log("settings");
     // document.body.classList.toggle('dark');
-    document.documentElement.classList.add("dark");
     if (mode === false) {
+      document.querySelector("html").setAttribute("data-theme", "black");
       setMode(true);
     } else {
       setMode(false);
+      document.querySelector("html").setAttribute("data-theme","cmyk");
     }
   }
   
@@ -54,9 +55,9 @@ export default function Navbar() {
       >
         <BiLogOut />
       </button>
-      <div className="absolute left-24 bg-blue-500 dark:bg-black-500 bg-opacity-50 text-white text-center top-3 rounded-lg">
+      <div className="absolute md:left-24 left-12 bg-blue-500 bg-black-500 bg-opacity-50 text-white text-center md:top-3 top-5 rounded-lg">
         <button onClick={handleProfile}>
-        <h1 className="text-4xl font-bold p-1 border-2 border-gray-200 rounded-lg">{username}</h1>
+        <h1 className="md:text-4xl text-2xl font-bold md:p-1 md:border-2 border-1 border-gray-200 rounded-lg">{username}</h1>
         </button>
       </div>
       {mode

@@ -85,7 +85,14 @@ button {
 .center-div {
   top: 50%;
   left: 50%;
+  max-width: auto%;
+  min-width: auto%;
   transform: translate(-50%, -50%);
+}
+
+.center-div-md {
+  max-width: 50%;
+  min-width: 0%;
 }
 
 @keyframes appear {

@@ -117,6 +117,7 @@ export default function MainPage() {
 
   function handleTogglePostExpand() {
     setTogglePostExpand(!togglePostExpand);
+    // document.querySelector("html").setAttribute("data-theme", "dark");
   }
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
@@ -151,7 +152,7 @@ export default function MainPage() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-400 via-blue-300 to-blue-200 h-screen dark:bg-black-500"> 
+    <div className="bg-gradient-to-b from-blue-200 via-gray-300 to-blue-200 h-screen"> 
       {chatToggle && (
         <>
           <button
