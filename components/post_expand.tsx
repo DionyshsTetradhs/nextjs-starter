@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Main = ({post_id, onChange, togglePostExtend, username, title, description }) => {
+const Main = ({post_id, onChange, togglePostExtend, username, title, description, pictureUrl }) => {
     const fetchData = async()=>{
       const apiUrl = "./api/get_post_replies";
       const response = await axios({
@@ -58,25 +58,38 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
     setVisibility(!visibility);
   };
 
+  const handleUsernameClick = ()=>{
+    console.log(username);
+  }
+
   return (
     <>
       {togglePostExtend
         ? (
-          <div className="absolute center-div md:center-div-md z-20">
+          <div className="absolute flex flex-row m-1 mt-40 md:m-40 z-20">
+              <div className="flex ">
+      <img
+        src={pictureUrl}
+        alt="pic"
+        className="w-46 h-46 rounded-lg object-cover"
+      />
+    </div>
             <button
               onClick={onChange}
               className="absolute top-3 right-[2%] bg-red-200 rounded-full transform translate-x-0 w-6"
             >
               X
             </button>
-            <div className="flex items-center justify-center bg-gray-500 bg-opacity-50">
+            <div className="flex flex-row bg-gray-500 bg-opacity-50">
               <div className="bg-white rounded-lg p-6 shadow-lg overflow-y-auto">
                 <h2 className="text-xl text-center font-bold mb-4 pt-3">
                  {title} 
                 </h2>
+                <button onClick={handleUsernameClick}>
                 <p className="absolute top-2 left-2 text-center text-white shadow-lg bg-blue-300 rounded-lg p-1">
                   {username}
                 </p>
+                </button>
                 <p className="mb-4 text-center">
                   {description}
                 </p>

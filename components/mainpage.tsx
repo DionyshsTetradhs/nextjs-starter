@@ -54,6 +54,8 @@ export default function MainPage() {
   const [postDescription, setPostDescription] = useState("");
   const [postReplies, setPostReplies] = useState([]);
   const [chatID, setChatID] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  
 
   function handleOnDrag(PostID: string, postID: string, username: string) {
     setUsername_p(username);
@@ -107,12 +109,14 @@ export default function MainPage() {
     username: string,
     title: string,
     description: string,
+    img:string
   ) {
     setPostUsername(username);
     setPostTitle(title);
     setPostDescription(description);
     setPostId(post_id);
     setTogglePostExpand(true);
+    setPictureUrl(img);
   }
 
   function handleTogglePostExpand() {
@@ -174,6 +178,7 @@ export default function MainPage() {
         username={postUsername}
         title={postTitle}
         description={postDescription}
+        pictureUrl={pictureUrl}
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
         {posts.map((post) => (
@@ -185,6 +190,7 @@ export default function MainPage() {
                 post?.username,
                 post?.title,
                 post?.description,
+                post?.img,
               )}
             draggable
             onDragStart={() =>
@@ -206,7 +212,8 @@ export default function MainPage() {
               onClick={minimizePost}
             >
               <MenuIcon />
-            </button>{" "}
+              
+            </button>
             <Post></Post>
           </>
         )
