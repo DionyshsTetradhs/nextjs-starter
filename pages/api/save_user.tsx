@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   if (req.method == "POST") {
     try {
-      const { storedKey, storedUserID, username, hashedPassword } = req.body;
+      const { storedKey, storedUserID, username, hashedPassword, name, surName, pictureUrl } = req.body;
       const authed = await Auth([storedKey, storedUserID]);
       if (authed) {
         await prisma.User.update({
@@ -18,6 +18,9 @@ export default async function handler(
           data: {
             username: username,
             password: hashedPassword,
+            name: name,
+            surname: surName,
+            picture: pictureUrl,
           },
         });
         res.status(200).send(200);

@@ -31,7 +31,9 @@
     "react-dom": "^18.2.0",
     "react-email-validator": "^1.0.2",
     "react-icons": "^4.10.1",
-    "svg-inline-loader": "^0.8.2"
+    "react-uploader": "^3.41.0",
+    "svg-inline-loader": "^0.8.2",
+    "uploader": "^3.48.0"
   },
   "devDependencies": {
     "@types/node": "18.15.10",

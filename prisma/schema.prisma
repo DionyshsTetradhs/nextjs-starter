@@ -18,6 +18,8 @@ model User {
     s_key       String     
     picture     String?
     createdAt   DateTime
+    name        String?
+    surname     String?
     Post        Post[]
 }
 

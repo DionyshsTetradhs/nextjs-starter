@@ -4,6 +4,8 @@ import axios from "axios";
 import { passwordStrength } from "check-password-strength";
 import { useRouter } from "next/router";
 import { FaHome } from "react-icons/fa";
+import { Uploader } from "uploader";
+import { UploadButton } from "react-uploader";
 
 export default function Profile() {
   useEffect(() => {
@@ -17,6 +19,9 @@ export default function Profile() {
         data: { storedKey, storedUserID },
       });
       setUsername(response.data.username);
+      setName(response.data.name);
+      setSurName(response.data.surname);
+      setPictureUrl(response.data.picture);
     };
     fetchData();
     return undefined;
@@ -27,8 +32,12 @@ export default function Profile() {
   const [passwordV, setPasswordV] = useState("");
   const [usernameValidation, setUsernameValidation] = useState(true);
   const [passStrength, setPassStrength] = useState("");
+  const [name, setName] = useState("");
+  const [surName, setSurName] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg");
   var passwordHash = require("password-hash");
   const router = useRouter();
+  const uploader = Uploader({ apiKey: "public_W142iE2AjY4bCXCRYqGsKGyzDAm5" });
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -59,7 +68,7 @@ export default function Profile() {
       await axios({
         url: apiUrl,
         method: "POST",
-        data: { storedKey, storedUserID, username, hashedPassword },
+        data: { storedKey, storedUserID, username, hashedPassword, name, surName, pictureUrl},
       });
       router.push("/");
     } else {
@@ -84,6 +93,14 @@ export default function Profile() {
   function handleChangePasswordV(e: ChangeEvent<HTMLInputElement>) {
     setPasswordV(e.target.value);
   }
+  
+  function handleName(e: ChangeEvent<HTMLInputElement>) {
+    setName(e.target.value);
+  }
+  
+  function handleSurName(e: ChangeEvent<HTMLInputElement>) {
+    setSurName(e.target.value);
+  }
 
   return (
     <>
@@ -100,6 +117,25 @@ export default function Profile() {
                 Change your profile information
               </span>
             </div>
+    <div className="border border-blue-700 rounded-xl text-center">
+              <h1 className="bg-yellow-600 rounded-xl">profile picture</h1>
+              <div className="flex items-center justify-center">
+      <img
+        src={pictureUrl}
+        alt="Profile"
+        className="w-16 h-16 rounded-full object-cover"
+      />
+    </div>
+   <UploadButton uploader={uploader}
+                  options={{ multi: true }}
+                  onComplete={files => setPictureUrl(files.map(x => x.fileUrl).join("\n"))}>
+      {({onClick}) =>
+        <button onClick={onClick}>
+          Upload a file...
+        </button>
+      }
+    </UploadButton>
+  </div>
             <form
               onSubmit={formSubmit}
               className="flex flex-col items-center justify-center"
@@ -117,6 +153,24 @@ export default function Profile() {
               {usernameValidation
                 ? <p className="errors text-green-800">valid</p>
                 : <p className="errors text-red-800">taken</p>}
+              <div className="mb-1 text-lg">
+                <input
+                  onChange={handleName}
+                  className="flex justify-center items-center rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+              <div className="mb-1 text-lg">
+                <input
+                  onChange={handleSurName}
+                  className="flex justify-center items-center rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                  type="text"
+                  name="sur_name"
+                  placeholder="SurName"
+                />
+              </div>
               <div className="mb-1 text-lg">
                 <input
                   onChange={handleChangePassword}
