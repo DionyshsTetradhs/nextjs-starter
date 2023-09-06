@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from 'next/router'
 
 const Main = ({post_id, onChange, togglePostExtend, username, title, description, pictureUrl }) => {
     const fetchData = async()=>{
@@ -32,7 +33,8 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [visibility, setVisibility] = useState(true);
-
+  const router = useRouter()
+  
   async function addComment(){
     if (newComment.trim() === "") return;
     try{
@@ -53,12 +55,28 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
     setNewComment("");
   };
 
-  const handleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setVisibility(!visibility);
-  };
+  // const handleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault();
+  //   setVisibility(!visibility);
+  // };
 
-  const handleUsernameClick = ()=>{
+  async function handleUsernameClick (event: React.MouseEvent<HTMLButtonElement>){
+        event.preventDefault()
+        try {
+          const apiUrl = "./api/get_user_profile";
+          const response = await axios({
+            url: apiUrl,
+            method: "POST",
+            data: { username },
+          });
+          const data = response.data;
+          router.push('/user/' + "'" + data.username + data.name + data.email + data.picture + "'")
+            // pathname:'/user',
+            // query:{username:data.username, name:data.name, picture:data.picture},
+            //           })
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
     console.log(username);
   }
 
