@@ -70,10 +70,11 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
             data: { username },
           });
           const data = response.data;
-          router.push('/user/' + "'" + data.username + data.name + data.email + data.picture + "'")
-            // pathname:'/user',
-            // query:{username:data.username, name:data.name, picture:data.picture},
-            //           })
+          router.push({
+          // '/user/' + "'" + data.username + data.name + data.email + data.picture + "'")
+            pathname:'/user',
+            query:{id:data.id, email:data.email, username:data.username, name:data.name, surname:data.surname,  picture:data.picture},
+                      })
         } catch (error) {
           console.error("Error fetching user profile:", error);
         }
