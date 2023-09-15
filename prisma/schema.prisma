@@ -52,7 +52,8 @@ model Post_replys {
 model Friendship{
     id          String       @id @default(uuid())
     user_id     String 
-    users_id    String 
+    friend_id    String 
+    status      String
     createdAt   DateTime
 }
 

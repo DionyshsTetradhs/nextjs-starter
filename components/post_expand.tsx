@@ -78,7 +78,6 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
         } catch (error) {
           console.error("Error fetching user profile:", error);
         }
-    console.log(username);
   }
 
   return (

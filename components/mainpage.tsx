@@ -169,8 +169,6 @@ export default function MainPage() {
           <Chat id={receiverID} chatId={chatID} />
         </>
       )}
-      <Navbar />
-      <SearchBar onSearch={onSearchChange} value={search} />
       <PostExpand
         onChange={handleTogglePostExpand}
         togglePostExtend={togglePostExpand}
@@ -180,6 +178,8 @@ export default function MainPage() {
         description={postDescription}
         pictureUrl={pictureUrl}
       />
+      <Navbar />
+      <SearchBar onSearch={onSearchChange} value={search} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 min-h-16 py-24">
         {posts.map((post) => (
           <div

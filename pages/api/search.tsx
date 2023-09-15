@@ -19,6 +19,9 @@ export default async function handler(
  where: {
           username: clean_search,
       },
+          orderBy: {
+            createdAt: "desc",
+          },
       });
     }else{
       posts = await prisma.Post.findMany({

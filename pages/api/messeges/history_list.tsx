@@ -24,14 +24,12 @@ export default async function handler(
       const authed = await Auth([req.headers.key, req.headers.userid]);
       if (authed) {
         const id = req?.headers.userid;
-
         try {
           let data = await prisma.Messages.findMany({
             where: {
               sender_id: id,
             },
           });
-
           data = await removeDuplicates(data);
 
           // Create an array of promises for each getUsernameWithID call
