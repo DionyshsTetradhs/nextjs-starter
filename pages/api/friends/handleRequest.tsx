@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           });
           isFriendResponse = "Pending"
-        }else if(isFriend === "Pending"){
+        }else if(isFriend === "Pending" || isFriend === "Friend"){
         await prisma.Friendship.deleteMany({
           where: {
             OR: [
@@ -36,7 +36,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
           isFriendResponse = "Add friend"
         }
-        // if(){
         // await prisma.Friendship.update({
         //   where: {
         //     OR: [
@@ -51,11 +50,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         //     ],
         //   },
         //   data: {
-        //       status:"Remove"
+        //       status:"Friend"
         //   },
         // });
-        //   isFriendResponse = "Remove"
-        // }
         
           res.status(200).send(isFriendResponse);
         }else{
