@@ -7,10 +7,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  async function getUsernameWithID(receiver_id: string) {
+  async function getUsernameWithID(r_id: string) {
     try {
       const response = await prisma.User.findUnique({
-        where: { id: receiver_id },
+        where: { id: r_id },
       });
       return response?.username;
     } catch (error) {
@@ -23,19 +23,30 @@ export default async function handler(
     try {
       const authed = await Auth([req.headers.key, req.headers.userid]);
       if (authed) {
-        const id = req?.headers.userid;
+        var m_id = req?.headers.userid;
         try {
           let data = await prisma.Messages.findMany({
             where: {
-              sender_id: id,
+              OR: [
+                { sender_id: m_id},
+                { receiver_id: m_id},
+              ],
             },
           });
+          
+          console.log(data);
           data = await removeDuplicates(data);
+          console.log(data);
 
           // Create an array of promises for each getUsernameWithID call
           const promiseArray = data.map(async (item) => {
-            let username_data = await getUsernameWithID(item.receiver_id);
-            const id = item.receiver_id;
+            if (item.receiver_id === m_id){
+              var username_data = await getUsernameWithID(item.sender_id);
+              var id = item.sender_id;
+            }else{
+              var username_data = await getUsernameWithID(item.receiver_id);
+              var id = item.receiver_id;
+            }
             return { id, username_data };
           });
 

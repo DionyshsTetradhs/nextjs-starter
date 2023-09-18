@@ -55,11 +55,6 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
     setNewComment("");
   };
 
-  // const handleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault();
-  //   setVisibility(!visibility);
-  // };
-
   async function handleUsernameClick (event: React.MouseEvent<HTMLButtonElement>){
         event.preventDefault()
         try {
@@ -89,7 +84,7 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
       <img
         src={pictureUrl}
         alt="pic"
-        className="w-46 h-46 rounded-lg object-cover"
+        className="w-full h-96 rounded-lg object-cover"
       />
     </div>
             <button

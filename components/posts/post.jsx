@@ -29,6 +29,7 @@ export default function Post() {
     });
       setTitle("");
       setDescription("");
+      setPictureUrl("");
     }catch(error){
       console.error('Error posting post', error);
     }

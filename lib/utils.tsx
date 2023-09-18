@@ -27,18 +27,18 @@ export function toPusherKey(key:string){
   return key.replace(/:/g, '__');
 }
 
-
-export async function removeDuplicates(data: Messag[]) {
+export async function removeDuplicates(data: Messag[]): Promise<Messag[]> {
   const newData: Messag[] = [];
 
   for (const item of data) {
-    const exists = newData.some((newItem) => newItem.receiver_id === item.receiver_id);
+    const exists = newData.some(
+      (newItem) =>
+        (newItem.receiver_id === item.receiver_id && newItem.sender_id === item.sender_id) ||
+        (newItem.receiver_id === item.sender_id && newItem.sender_id === item.receiver_id)
+    );
+
     if (!exists) {
-      try {
-        newData.push(item);
-      } catch (error) {
-        console.error("Error while getting username:", error);
-      }
+      newData.push(item);
     }
   }
 
