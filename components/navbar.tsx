@@ -98,8 +98,9 @@ export default function Navbar() {
         )}
       {help?(<><div className="absolute z-50 top-14 right-24 bg-blue-400 rounded-lg p-5">
         <ul>
-          <li>Search for users(user:)</li>
-          
+          <li>-Search for users(user:)</li>
+          <li>-Press Chat to see you messages list</li>
+          <li>-Go to your profile to see friend requests and friends list</li>
         </ul></div></>):<></>}
     </div>
   );
