@@ -25,6 +25,28 @@ export default function Profile() {
       setPictureUrl(response.data.picture);
       
       try {
+        const requests = await axios({
+          url: "./api/friends/listRequests",
+          method: "POST",
+          data: {storedKey, storedUserID },
+        });
+        setRequests(requests.data);
+      } catch (err) {
+        console.error(err);
+      }
+      
+      try {
+        const requests = await axios({
+          url: "./api/friends/listFriends",
+          method: "POST",
+          data: {storedKey, storedUserID },
+        });
+        setFriends(requests.data);
+      } catch (err) {
+        console.error(err);
+      }
+      
+      try {
         const result = await axios({
           url: "./api/search",
           method: "POST",
@@ -35,6 +57,7 @@ export default function Profile() {
       } catch (err) {
         console.error(err);
       }
+      
     };
     
     fetchData();
@@ -57,6 +80,8 @@ export default function Profile() {
   const [postDescription, setPostDescription] = useState("");
   // const [pictureUrl, setPictureUrl] = useState("");
   const [postId, setPostId] = useState("");
+  const [friends, setFriends] = useState([]);
+  const [requests, setRequests] = useState([]);
   var passwordHash = require("password-hash");
   const router = useRouter();
   const uploader = Uploader({ apiKey: "public_W142iE2AjY4bCXCRYqGsKGyzDAm5" });
@@ -134,6 +159,34 @@ export default function Profile() {
 
   function handleChangePasswordV(e: ChangeEvent<HTMLInputElement>) {
     setPasswordV(e.target.value);
+  }
+
+  async function handleAccept(request){
+      const storedKey = localStorage.getItem("key");
+      const storedUserID = localStorage.getItem("userID");
+      try {
+        await axios({
+          url: "./api/friends/acceptRequest",
+          method: "POST",
+          data: {storedKey, storedUserID, request},
+        });
+      } catch (err) {
+        console.error(err);
+      }
+  }
+
+  async function handleDecline(request){
+      const storedKey = localStorage.getItem("key");
+      const storedUserID = localStorage.getItem("userID");
+      try {
+        await axios({
+          url: "./api/friends/declineRequest",
+          method: "POST",
+          data: {storedKey, storedUserID, request},
+        });
+      } catch (err) {
+        console.error(err);
+      }
   }
   
   function handleName(e: ChangeEvent<HTMLInputElement>) {
@@ -275,6 +328,24 @@ export default function Profile() {
           </div>
           ))}
           </div>
+        </div>
+        <div className="absolute right-2 top-2">
+          <h1 className="text-white bg-blue-400 rounded-full p-2">Friend Requests</h1>
+          {requests.map((request)=>(
+          <div key={request.id} className="bg-blue-900 rounded-full p-2 m-4">
+              <h2 className="text-center text-white">{request.user_username}</h2>
+              <button onClick={() => handleAccept(request)} className="bg-blue-200 rounded-full p-2">Accept</button>
+              <button onClick={() => handleDecline(request)} className="bg-red-200 rounded-full p-2">Decline</button>
+          </div>
+          ))}
+        </div>
+        <div className="absolute left-2 top-2">
+          <h1 className="text-white bg-blue-400 rounded-full p-2">Friends</h1>
+          {friends.map((friend)=>(
+          <div key={friend.id} className="rounded-full p-2 m-4 pl-0">
+              <h2 className="text-center text-white bg-blue-900 rounded-full p-2">{friend.user_username}</h2>
+          </div>
+          ))}
         </div>
         
       </div>

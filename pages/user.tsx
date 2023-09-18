@@ -63,6 +63,8 @@ export default function User() {
   }
     fetchData();
   },[]);
+  
+  
 
 
   function goHome(){
@@ -77,7 +79,7 @@ export default function User() {
       const response = await axios({
         url: apiUrl,
         method: "POST",
-        data: {storedKey, storedUserID, friendID, isFriend },
+        data: {storedKey, storedUserID, friendID, isFriend, friend_username:username },
       });
       setIsFriend(response.data);
     } catch (error) {
