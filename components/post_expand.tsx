@@ -112,6 +112,8 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
 
                       <p className="rounded-lg bg-blue-300 p-4">
                       {comment.username}
+                        <p>{comment.createdAt.split('T')[0]}</p>
+                        <p>{comment.createdAt.split('T')[1].slice(0, -1).split('.')[0]}</p>
                       </p>
                       <p className="text-center">
                       {comment.reply}
