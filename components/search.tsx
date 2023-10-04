@@ -25,9 +25,9 @@ export default function Search(props:any) {
   
   return(
     <>
-      {visibility? <><div className="absolute container bottom-80 mx-0 min-w-full flex flex-col items-center"><button className="absolute zindex-[-10] bg-blue-200 hover:bg-blue-400 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse" onClick={handleVisibility}><BiSearchAlt /></button> </div></>:
+      {visibility? <><div className="absolute container bottom-48 mx-0 min-w-full flex flex-col items-center"><button className="absolute zindex-[-10] bg-blue-200 hover:bg-blue-400 text-blue-800 hover:text-white rounded-full p-4 absolute animate-pulse" onClick={handleVisibility}><BiSearchAlt /></button> </div></>:
 
-          <div className="absolute container bottom-80 m-10 mx-0 min-w-full flex flex-col items-center">
+          <div className="absolute container bottom-48 m-10 mx-0 min-w-full flex flex-col items-center">
       <form onSubmit={handleSubmit} className="absolute container top-1 mx-0 min-w-full flex flex-col items-center">
             
         <input className="absolute animate-appear text-center outline-none bg-gray-200 border-gray-400 focus:outline-none rounded-md w-80 h-12 text-lg" autoFocus id="searchInput" ref={inputRef} onBlur={handleBlur} onChange={(e)=>{props.onSearch(e.target.value.toLowerCase())}} type="text" placeholder="Search"></input>
