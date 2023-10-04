@@ -34,6 +34,8 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
   const [newComment, setNewComment] = useState("");
   const [visibility, setVisibility] = useState(true);
   const router = useRouter()
+  const [votes, setVotes] = useState(Math.floor(Math.random() * 100));
+  
   
   async function addComment(){
     if (newComment.trim() === "") return;
@@ -75,6 +77,14 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
         }
   }
 
+ function handleUpvote(){
+    setVotes(votes + 1)
+}
+  
+ function handleDownvote(){
+    setVotes(votes - 1)
+}
+
   return (
     <>
       {togglePostExtend
@@ -103,6 +113,23 @@ const Main = ({post_id, onChange, togglePostExtend, username, title, description
                   {username}
                 </p>
                 </button>
+                
+                <div className="absolute flex flex-col top-12 right-1 text-center text-white p-1">
+                <button onClick={handleUpvote}>
+                <p className="text-center text-white shadow-lg bg-blue-300 rounded-lg m-1 p-1">
+                  ^
+                </p>
+                </button>
+                <p className="text-black">
+                    {votes}
+                </p>
+                <button onClick={handleDownvote}>
+                <p className="text-center text-white shadow-lg bg-blue-300 rounded-lg m-1 p-1">
+                  v
+                </p>
+                </button>
+                </div>
+                
                 <p className="mb-4 text-center">
                   {description}
                 </p>
